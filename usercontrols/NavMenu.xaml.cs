@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace OpSy_Cryptor
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for NavMenu.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class NavMenu : UserControl
     {
-        public MainWindow()
+        public NavMenu()
         {
             InitializeComponent();
         }

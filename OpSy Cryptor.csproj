@@ -5,10 +5,13 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <RootNamespace>OpSy_Cryptor</RootNamespace>
     <UseWPF>true</UseWPF>
+    <StartupObject>OpSy_Cryptor.App</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="logoV2.png" />
+    <None Remove="resources/back.png" />
+    <None Remove="resources/logoBig.png" />
+    <None Remove="resources/logoSmall.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,7 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="logoV2.png" />
+    <Resource Include="resources/back.png" />
+    <Resource Include="resources/logoBig.png" />
+    <Resource Include="resources/logoSmall.png" />
   </ItemGroup>
 
 </Project>
