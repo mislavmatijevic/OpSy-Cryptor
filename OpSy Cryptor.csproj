@@ -7,4 +7,16 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="logoV2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="2.13.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="logoV2.png" />
+  </ItemGroup>
+
 </Project>

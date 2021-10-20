@@ -1,14 +1,38 @@
-﻿<Window x:Class="OpSy_Cryptor.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:OpSy_Cryptor"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+﻿<Window x:Class="OpSy_Cryptor.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:OpSy_Cryptor" mc:Ignorable="d" Title="Glavni prozor" Height="174" Width="149" MinWidth="300" MinHeight="300" MaxWidth="600" MaxHeight="400" Background="#FFC3C3C3">
     <Grid>
-        
-        
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition MinWidth="60" />
+            <ColumnDefinition MinWidth="150" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="50*" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+
+        <Image MaxHeight="100" Source="/logoV2.png" Grid.Column="1" Grid.Row="1" />
+
+        <Label Padding="5 10 0 0" Grid.Column="2" Grid.Row="2" FontFamily="Bahnschrift Light" Height="30" VerticalAlignment="Center" Margin="10,0,10,0">Korisničko ime:</Label>
+        <TextBox Padding="1" TextAlignment="Justify" Grid.Column="2" Grid.Row="3" Margin="10,0,16,0" Background="#FFF3E2E4" Foreground="#FF970000" RenderTransformOrigin="0.507,-0.103" UseLayoutRounding="True" BorderBrush="Black" Height="20" VerticalAlignment="Center">abc</TextBox>
+
+        <Label Padding="5 10 0 0" Grid.Column="2" Grid.Row="4" FontFamily="Bahnschrift Light" Height="30" VerticalAlignment="Center" Margin="10,0,10,0">Lozinka:</Label>
+        <PasswordBox Padding="1" Grid.Column="2" Grid.Row="5" Margin="10,0,14,0" Background="#FFF3E2E4" Foreground="#FF970000" UseLayoutRounding="True" BorderBrush="Black" Height="21" VerticalAlignment="Center" />
+
+        <Button Content="Prijava" Padding="0 -2 0 0" Grid.Column="2" MaxWidth="100" MaxHeight="20" Grid.Row="7" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" />
+
+        <Button Padding="0 -2 0 0" Grid.Column="2" MaxWidth="125" Height="20" Grid.Row="9" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" Content="Registracija" Margin="2,5,2,5" FontSize="9" />
 
     </Grid>
 </Window>
