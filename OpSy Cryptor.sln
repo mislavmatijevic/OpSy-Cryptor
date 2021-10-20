@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31613.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpSy Cryptor", "OpSy Cryptor.csproj", "{5EDA2A2D-2E17-447D-B54E-68067A995A63}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5EDA2A2D-2E17-447D-B54E-68067A995A63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EDA2A2D-2E17-447D-B54E-68067A995A63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EDA2A2D-2E17-447D-B54E-68067A995A63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EDA2A2D-2E17-447D-B54E-68067A995A63}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {576A7620-2E0F-43A6-AA2D-FB1D9E7E0A54}
+	EndGlobalSection
+EndGlobal
