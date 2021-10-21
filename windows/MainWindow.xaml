@@ -16,8 +16,8 @@
             <usercontrols:HelpScreen Grid.Column="2" Grid.Row="1" />
         </ContentControl>
 
-        <TextBlock x:Name="usernameTextBlock" FontFamily="Bahnschrift Light" TextAlignment="Right" Grid.Column="2" VerticalAlignment="Top" Foreground="#FFE47547" Height="20" Grid.Row="1" Margin="395,0,0,0">Korisnik: Mislav</TextBlock>
-        <TextBlock x:Name="loadedFileTextBlock" FontFamily="Bahnschrift Light" Grid.Column="2" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFE47547" Margin="0,0,165,0">Učitana datoteka: C:/Files/Folder/Subfolder/document.txt</TextBlock>
+        <TextBlock x:Name="usernameTextBlock" Padding="3" FontFamily="Bahnschrift Light" TextAlignment="Right" Grid.Column="2" VerticalAlignment="Center" Foreground="#FFE47547" Height="20" Margin="10,0,0,0">Korisnik: Mislav</TextBlock>
+        <TextBlock x:Name="loadedFileTextBlock" FontFamily="Bahnschrift Light" Grid.Column="2" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFE47547" Margin="10,0,0,0">Učitana datoteka: C:/Files/Folder/Subfolder/document.txt</TextBlock>
 
     </Grid>
 </Window>

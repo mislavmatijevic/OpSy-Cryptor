@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace OpSy_Cryptor
 {
@@ -23,8 +11,8 @@ namespace OpSy_Cryptor
     {
         HelpShown,
         LoadFile,
-        CryptSymetric,
-        CryptASymetric,
+        CryptSymmetric,
+        CryptASymmetric,
         CalculateHash,
         DigitalSignature,
         CheckSignature
@@ -40,40 +28,52 @@ namespace OpSy_Cryptor
             InitializeComponent();
         }
 
-        public void CryptSymetric_Click(object sender, RoutedEventArgs e)
+        public void CryptSymmetric_Click(object sender, RoutedEventArgs e)
         {
             if (ChangeStateEvent is not null)
-                ChangeStateEvent(Option.CryptSymetric);
+            {
+                ChangeStateEvent(Option.CryptSymmetric);
+            }
         }
 
-        public void CryptAsymetric_Click(object sender, RoutedEventArgs e)
+        public void CryptAsymmetric_Click(object sender, RoutedEventArgs e)
         {
             if (ChangeStateEvent is not null)
-                ChangeStateEvent(Option.CryptASymetric);
+            {
+                ChangeStateEvent(Option.CryptASymmetric);
+            }
         }
 
         public void CalculateHash_Click(object sender, RoutedEventArgs e)
         {
             if (ChangeStateEvent is not null)
+            {
                 ChangeStateEvent(Option.CalculateHash);
+            }
         }
 
         public void DigitallySign_Click(object sender, RoutedEventArgs e)
         {
             if (ChangeStateEvent is not null)
+            {
                 ChangeStateEvent(Option.DigitalSignature);
+            }
         }
 
         public void CheckSignature_Click(object sender, RoutedEventArgs e)
         {
             if (ChangeStateEvent is not null)
+            {
                 ChangeStateEvent(Option.CheckSignature);
+            }
         }
 
         public void LoadFile_Click(object sender, RoutedEventArgs e)
         {
             if (ChangeStateEvent is not null)
+            {
                 ChangeStateEvent(Option.LoadFile);
+            }
         }
 
 

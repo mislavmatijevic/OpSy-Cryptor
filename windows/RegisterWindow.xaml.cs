@@ -3,20 +3,10 @@ using OpSy_Cryptor.common;
 using OpSy_Cryptor.database;
 using OpSy_Cryptor.model;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace OpSy_Cryptor
 {
@@ -25,7 +15,7 @@ namespace OpSy_Cryptor
     /// </summary>
     public partial class RegisterWindow : Window
     {
-        private readonly string pathToDirectory = AppDomain.CurrentDomain.BaseDirectory + "OpSy_Generirano";
+        private string pathToDirectory = $"{AppDomain.CurrentDomain.BaseDirectory}OpSy Generirano";
 
         public RegisterWindow()
         {
@@ -84,24 +74,22 @@ namespace OpSy_Cryptor
 
             if (File.Exists(fullPath))
             {
-                File.Delete(fullPath);
+                File.Move(fullPath, fullPath + ".old.txt");
             }
 
-            using (FileStream fs = File.Create(fullPath))
-            {
-                byte[] binaryContent = new UTF8Encoding(true).GetBytes(contents);
-                fs.Write(binaryContent, 0, binaryContent.Length);
-            }
+            File.WriteAllText(fullPath, contents);
         }
 
         private void CompleteRegistration(User user)
         {
             Mouse.OverrideCursor = Cursors.Arrow;
 
+            pathToDirectory += $" {((User)Tag).Username}";
+
             Directory.CreateDirectory(pathToDirectory);
-            CreateKeyFile("javni_kljuc.txt", Encryption.Object.PublicKeyString);
-            CreateKeyFile("privatni_kljuc.txt", Encryption.Object.PrivateKeyString);
-            CreateKeyFile("tajni_kljuc.txt", Encryption.Object.SecretKeyString);
+            CreateKeyFile("javni_kljuc.txt", Encryption.Object.GetPublicKey);
+            CreateKeyFile("privatni_kljuc.txt", Encryption.Object.GetPrivateKey);
+            CreateKeyFile("tajni_kljuc.txt", Encryption.Object.GetSecretKey);
 
             MessageBoxResult result = MessageBox.Show($"Korisnički podaci:\n" +
                 $"ID: {user.Id}\n" +

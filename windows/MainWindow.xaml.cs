@@ -2,18 +2,8 @@
 using OpSy_Cryptor.model;
 using OpSy_Cryptor.usercontrols;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace OpSy_Cryptor
 {
@@ -24,47 +14,86 @@ namespace OpSy_Cryptor
     {
 
         private User UserObject { get; set; }
-        private SelectedFile selectedFile;
+        private SelectedFile selectedFile = null;
+        private readonly string pathToDirectory;
 
         public MainWindow(User userObject)
         {
-            InitializeComponent();
             UserObject = userObject;
+            pathToDirectory = $"{AppDomain.CurrentDomain.BaseDirectory}OpSy Generirano {UserObject.Username}";
+            LoadKeys();
+
+            InitializeComponent();
+
             loadedFileTextBlock.Text = ""; // Remove default tekst.
             usernameTextBlock.Text = "Korisnik: " + UserObject.Username;
-
             navMenu.ChangeStateEvent += NavMenu_ChangeStateEvent;
+        }
+
+        private string ReadKeyFromFile(string fileName)
+        {
+            string fullPath = $"{pathToDirectory}/{fileName}";
+
+            if (!File.Exists(fullPath))
+            {
+                throw new Exception($"Datoteka {fileName} ne postoji! Datoteke s ključevima moraju biti u direktoriju {pathToDirectory}!");
+            }
+
+            return File.ReadAllText(fullPath);
+        }
+
+        private void LoadKeys()
+        {
+            try
+            {
+                Encryption.Object.LoadPrivateKeyECDH(ReadKeyFromFile("privatni_kljuc.txt"));
+                Encryption.Object.LoadSecretKeyAES(ReadKeyFromFile("tajni_kljuc.txt"));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Problem pri čitanju datoteke!", MessageBoxButton.OK, MessageBoxImage.Error);
+                Environment.Exit(0);
+            }
+
         }
 
         private void NavMenu_ChangeStateEvent(Option option)
         {
-            switch (option)
+            if (option == Option.LoadFile)
             {
-                case Option.HelpShown:
-                    contentControl.Content = new HelpScreen();
-                    break;
-                case Option.LoadFile:
-                    LoadFiles loadFiles = new();
-                    loadFiles.OnFileSelectedEvent += LoadFiles_OnFileSelectedEvent;
-                    contentControl.Content = loadFiles;
-                    break;
-                case Option.CryptSymetric:
-                    contentControl.Content = new HelpScreen();
-                    break;
-                case Option.CryptASymetric:
-                    contentControl.Content = new HelpScreen();
-                    break;
-                case Option.CalculateHash:
-                    contentControl.Content = new HelpScreen();
-                    break;
-                case Option.DigitalSignature:
-                    contentControl.Content = new HelpScreen();
-                    break;
-                case Option.CheckSignature:
-                    contentControl.Content = new HelpScreen();
-                    break;
-                default:
-                    break;
+                LoadFiles loadFiles = new();
+                loadFiles.OnFileSelectedEvent += LoadFiles_OnFileSelectedEvent;
+                contentControl.Content = loadFiles;
+            }
+            else if (selectedFile is null)
+            {
+                MessageBox.Show("Morate odabrati datoteku nad kojom će se radnje izvesti!", "Neuspjeh", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                switch (option)
+                {
+                    case Option.HelpShown:
+                        contentControl.Content = new HelpScreen();
+                        break;
+                    case Option.CryptSymmetric:
+                        contentControl.Content = new CryptSymmetric(selectedFile);
+                        break;
+                    case Option.CryptASymmetric:
+                        contentControl.Content = new CryptAsymmetric(selectedFile);
+                        break;
+                    case Option.CalculateHash:
+                        contentControl.Content = new HelpScreen();
+                        break;
+                    case Option.DigitalSignature:
+                        contentControl.Content = new HelpScreen();
+                        break;
+                    case Option.CheckSignature:
+                        contentControl.Content = new HelpScreen();
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
