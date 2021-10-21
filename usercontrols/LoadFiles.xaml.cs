@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using OpSy_Cryptor.common;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +26,22 @@ namespace OpSy_Cryptor.usercontrols
         public LoadFiles()
         {
             InitializeComponent();
+        }
+
+        public delegate void OnFileSelected(SelectedFile selectedFile);
+        public event OnFileSelected OnFileSelectedEvent;
+
+        private void LoadFile_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new();
+            openFileDialog.ShowDialog();
+            if (openFileDialog.CheckPathExists)
+            {
+                string path = openFileDialog.FileName;
+                byte[] contents = File.ReadAllBytes(path);
+
+                OnFileSelectedEvent(new SelectedFile(path, contents));
+            }
         }
     }
 }

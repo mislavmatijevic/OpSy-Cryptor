@@ -34,14 +34,7 @@
 
         <Button x:Name="loginButton" Content="Prijava" Padding="0 0 0 0" Grid.Column="2" Grid.Row="7" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" Margin="50,10,50,10" FontSize="20" Click="LoginButton_Click" FontFamily="Bahnschrift Light"/>
 
-        <Button x:Name="registerButton" Padding="0 -2 0 0" Grid.Column="2" Grid.Row="9" Background="#00AA2F3C" Foreground="#FFFF5D5D" Content="Registracija" Margin="10,15,10,15" FontSize="15" Click="RegisterButton_Click" FontFamily="Bahnschrift Light">
-            <Button.BorderBrush>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF252526" />
-                    <GradientStop Color="Red" Offset="1" />
-                </LinearGradientBrush>
-            </Button.BorderBrush>
-        </Button>
+        <Button x:Name="registerButton" Padding="0 -2 0 0" Grid.Column="2" Grid.Row="9" Background="#00AA2F3C" Foreground="#FFFF5D5D" Content="Registracija" Margin="10,15,10,15" FontSize="15" Click="RegisterButton_Click" FontFamily="Bahnschrift Light" />
 
     </Grid>
 </Window>

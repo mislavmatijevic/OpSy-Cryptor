@@ -28,11 +28,11 @@
             <RowDefinition Height="50" />
             <RowDefinition Height="30*" />
         </Grid.RowDefinitions>
-        <Button Content="Učitaj datoteku" Grid.Row="1" Background="#FFAA2F3C" Foreground="White" Grid.ColumnSpan="2" Margin="5" BorderBrush="Black" FontSize="22"/>
-        <Button Content="Kriptiraj simetrično" Grid.Row="3" Foreground="White" Background="#FF252526" Margin="-2,3,0,2" FontSize="20"/>
-        <Button Content="Kriptiraj asimetrično" Grid.Row="5" Foreground="White" Background="#FF252526" Margin="-2,3,0,2" FontSize="20"/>
-        <Button Content="Izračunaj sažetak" Grid.Row="7" Foreground="White" Background="#FF252526" Margin="-2,3,0,2" FontSize="20"/>
-        <Button Content="Digitalno potpiši" Grid.Row="9" Foreground="White" Background="#FF252526" Margin="-2,3,0,2" FontSize="20"/>
-        <Button Content="Provjeri potpis" Grid.Row="11" Foreground="White" Background="#FF252526" Margin="-2,3,0,2" FontSize="20"/>
+        <Button FontFamily="Bahnschrift Light" Content="Učitaj datoteku" Grid.Row="1" Background="#FFAA2F3C" Foreground="White" Margin="15,5,15,5" BorderBrush="Black" FontSize="22" RenderTransformOrigin="0.5,0.5" Click="LoadFile_Click" Grid.ColumnSpan="2" />
+        <Button FontFamily="Bahnschrift Light" Content="Kriptiraj simetrično" Grid.Row="3" Foreground="White" Background="#FF252526" Margin="-2,3,0,2" FontSize="20" Click="CryptSymetric_Click" />
+        <Button FontFamily="Bahnschrift Light" Content="Kriptiraj asimetrično" Grid.Row="5" Foreground="White" Background="#FF252526" Margin="-2,3,0,2" FontSize="20" Click="CryptAsymetric_Click" />
+        <Button FontFamily="Bahnschrift Light" Content="Izračunaj sažetak" Grid.Row="7" Foreground="White" Background="#FF252526" Margin="-2,3,0,2" FontSize="20" Click="CalculateHash_Click" />
+        <Button FontFamily="Bahnschrift Light" Content="Digitalno potpiši" Grid.Row="9" Foreground="White" Background="#FF252526" Margin="-2,3,0,2" FontSize="20" Click="DigitallySign_Click" />
+        <Button FontFamily="Bahnschrift Light" Content="Provjeri potpis" Grid.Row="11" Foreground="White" Background="#FF252526" Margin="-2,3,0,2" FontSize="20" Click="CheckSignature_Click" />
     </Grid>
 </UserControl>
