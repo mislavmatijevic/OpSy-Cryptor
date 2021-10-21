@@ -1,4 +1,5 @@
 ﻿using OpSy_Cryptor.common;
+using OpSy_Cryptor.model;
 using OpSy_Cryptor.usercontrols;
 using System;
 using System.Collections.Generic;
@@ -22,14 +23,15 @@ namespace OpSy_Cryptor
     public partial class MainWindow : Window
     {
 
-        private string UserObjectID { get; set; }
+        private User UserObject { get; set; }
         private SelectedFile selectedFile;
 
-        public MainWindow(string userObjectID)
+        public MainWindow(User userObject)
         {
             InitializeComponent();
-            UserObjectID = userObjectID;
-            loadedFileTextBox.Content = ""; // Remove default tekst.
+            UserObject = userObject;
+            loadedFileTextBlock.Text = ""; // Remove default tekst.
+            usernameTextBlock.Text = "Korisnik: " + UserObject.Username;
 
             navMenu.ChangeStateEvent += NavMenu_ChangeStateEvent;
         }
@@ -69,7 +71,7 @@ namespace OpSy_Cryptor
         private void LoadFiles_OnFileSelectedEvent(SelectedFile _selectedFile)
         {
             selectedFile = _selectedFile;
-            loadedFileTextBox.Content = $"Učitana datoteka: {_selectedFile.Path}";
+            loadedFileTextBlock.Text = $"Učitana datoteka: {selectedFile.Path}";
         }
     }
 }

@@ -2,17 +2,15 @@
 using OpSy_Cryptor.common;
 using OpSy_Cryptor.model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Configuration;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace OpSy_Cryptor.database
 {
-    class MongoDBConnect
+    internal class MongoDBConnect
     {
-        MongoClient DbClient { get; set; }
+        private MongoClient DbClient { get; set; }
 
         public MongoDBConnect()
         {
@@ -25,27 +23,29 @@ namespace OpSy_Cryptor.database
         */
         public async Task<User> RegisterUserAsync(string username, string password)
         {
-            var db = DbClient.GetDatabase("OpSyDB");
-            var collections = db.GetCollection<User>("users");
+            IMongoDatabase db = DbClient.GetDatabase("OpSyDB");
+            IMongoCollection<User> collections = db.GetCollection<User>("users");
 
-            var salt = Encryption.GetSalt();
+            string salt = Encryption.GetSalt();
 
-            await collections.InsertOneAsync(new User { Username = username, Salt = salt, Password = Encryption.GetPasswordHash(salt + password), PubKey = "123" });
+            Encryption.Object.GenerateKeys();
+
+            await collections.InsertOneAsync(new User { Username = username, Salt = salt, Password = Encryption.GetHashSHA256(salt + password), PubKey = Encryption.Object.PublicKeyString });
             return collections.AsQueryable().Where(sb => sb.Username == username).ToList()[0];
         }
 
         private async Task<User> GetUserFromDBAsync(string username, string password)
         {
-            var db = DbClient.GetDatabase("OpSyDB");
-            var collections = db.GetCollection<User>("users");
-            var userObject = await collections.Find(sb => sb.Username == username).ToListAsync();
+            IMongoDatabase db = DbClient.GetDatabase("OpSyDB");
+            IMongoCollection<User> collections = db.GetCollection<User>("users");
+            System.Collections.Generic.List<User> userObject = await collections.Find(sb => sb.Username == username).ToListAsync();
 
             if (userObject.Count == 0)
             {
                 throw new Exception("Korisnik ne postoji!");
             }
 
-            if (userObject[0].Password != Encryption.GetPasswordHash(userObject[0].Salt + password))
+            if (userObject[0].Password != Encryption.GetHashSHA256(userObject[0].Salt + password))
             {
                 throw new Exception("Pogrešna lozinka!");
             }

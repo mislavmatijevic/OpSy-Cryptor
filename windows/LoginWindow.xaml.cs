@@ -1,4 +1,5 @@
 ﻿using OpSy_Cryptor.database;
+using OpSy_Cryptor.model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace OpSy_Cryptor
     public partial class LoginWindow : Window
     {
         private RegisterWindow registerWindow;
-        private string UserObjectID { get; set; }
+        private User UserObject { get; set; }
 
         public LoginWindow()
         {
@@ -33,10 +34,11 @@ namespace OpSy_Cryptor
         {
             registerWindow = new();
             registerWindow.ShowDialog();
-            string userObjectId = (string)registerWindow.Tag;
-            if (!string.IsNullOrWhiteSpace(userObjectId))
+            User userObject = (User)registerWindow.Tag;
+            if (userObject is not null)
             {
-                UserObjectID = userObjectId;
+                UserObject = userObject;
+                usernameTextbox.Text = UserObject.Username;
                 LoginButton_Click(this, null);
             };
         }
@@ -56,7 +58,7 @@ namespace OpSy_Cryptor
 
                 try
                 {
-                    await mongoDBConnect.LoginUserAsync(username, password);
+                    UserObject = await mongoDBConnect.LoginUserAsync(username, password);
 
                     if (registerWindow is not null)
                     {
@@ -65,7 +67,7 @@ namespace OpSy_Cryptor
 
                     Mouse.OverrideCursor = Cursors.Arrow;
 
-                    MainWindow mainWindow = new(UserObjectID);
+                    MainWindow mainWindow = new(UserObject);
                     mainWindow.Show();
 
                     Close();
@@ -78,10 +80,6 @@ namespace OpSy_Cryptor
                     MessageBox.Show(ex.Message);
                 }
 
-            }
-            else
-            {
-                MessageBox.Show("Unesite sve potrebne podatke!", "Neuspjeh", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
