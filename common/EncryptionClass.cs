@@ -19,7 +19,6 @@ namespace OpSy_Cryptor.common
         private static readonly string CONTENT_END = "-----KRAJ ENKRIPTIRANOG SADRŽAJA-----";
         private static readonly string IV_BEGIN = "-----INICIJALIZACIJSKI VEKTOR-----";
         private static readonly string IV_END = "-----KRAJ INICIJALIZACIJSKOG VEKTORA-----";
-        private static readonly string SIGNATURE = "POTPISNIK";
 
         private ECDiffieHellmanCng diffieHellmanObject;
         private readonly Aes aesObject;
@@ -274,22 +273,15 @@ namespace OpSy_Cryptor.common
             return DecryptSymmetricAES(cryptedContent, symmetricKeyBase64);
         }
 
-        public string Sign(byte[] binaryContent)
+        public string Sign(byte[] binaryContent, string signature)
         {
-            CngKey privateKeyImported;
-            try
-            {
-                byte[] privateKeyBytes = Convert.FromBase64String(GetPrivateKey);
-                privateKeyImported = CngKey.Import(privateKeyBytes, CngKeyBlobFormat.EccFullPrivateBlob);
-            }
-            catch (Exception e)
-            {
-                throw new Exception($"Nešto je pošlo po zlu s privatnim ključem:\n\n{e}");
-            }
-            // Secret AES key is derived from private key.
-            string symmetricKey = Convert.ToBase64String(diffieHellmanObject.DeriveKeyMaterial(privateKeyImported));
+            var signer = ECDsa.Create();
 
-            return EncryptSymmetricAES(binaryContent, symmetricKey) + $"\n{SIGNATURE}: ";
+            byte[] signedData = signer.SignHash(binaryContent);
+
+            string signedDataBase64 = Convert.ToBase64String(signedData);
+
+            return $"{signature}.{signedDataBase64}";
         }
 
         public static string GetHashSHA256(byte[] binaryContent)

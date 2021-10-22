@@ -23,8 +23,7 @@ namespace OpSy_Cryptor.usercontrols
             if (confirmSignatureCheckBox.IsChecked == true)
             {
                 string hashedContentBase64 = EncryptionClass.GetHashSHA256(selectedFile.Contents);
-                string encryptedHashBase64 = EncryptionClass.GetInstance().Sign(Convert.FromBase64String(hashedContentBase64));
-                encryptedHashBase64 += userID;
+                string encryptedHashBase64 = EncryptionClass.GetInstance().Sign(Convert.FromBase64String(hashedContentBase64), userID);
 
                 string newPath = selectedFile.Path + "__potpis.txt";
                 File.WriteAllText(newPath, encryptedHashBase64);
