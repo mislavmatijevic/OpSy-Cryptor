@@ -24,5 +24,12 @@ namespace OpSy_Cryptor.usercontrols
         {
             InitializeComponent();
         }
+        /*
+         *  https://stackoverflow.com/questions/47363321/how-to-sign-a-message-using-ecdsa-with-an-ecdiffiehellman-instance-in-net-frame
+            ECDiffieHellmanPublicKey ecdhPk; //Compute this with public key bytes
+            var ecPkParams = ecdhPk.ExportParameters();
+            var verifier = ECDsa.Create(ecPkParams);
+            var verifyResult = verifier.VerifyData(bytesToBeVerified, signatureBytesToCheck, HashAlgorithmName.SHA256);
+         */
     }
 }
