@@ -12,7 +12,5 @@ namespace OpSy_Cryptor.model
         public string Salt { get; set; }
         public string Password { get; set; }
         public string PubKey { get; set; }
-        public string PrivateKey { get; }
-        public string SecretKey { get; }
     }
 }

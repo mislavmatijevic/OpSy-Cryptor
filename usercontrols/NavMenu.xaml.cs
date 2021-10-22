@@ -1,11 +1,9 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace OpSy_Cryptor
 {
-    /// <summary>
-    /// Interaction logic for NavMenu.xaml
-    /// </summary>
 
     public enum Option
     {
@@ -18,15 +16,38 @@ namespace OpSy_Cryptor
         CheckSignature
     }
 
-    public partial class NavMenu : UserControl
+    public partial class NavMenu : INotifyPropertyChanged
     {
-        public delegate void ChangeState(Option option);
-        public event ChangeState ChangeStateEvent;
-
         public NavMenu()
         {
+            DataContext = this;
+            IsFileLoaded = false;
             InitializeComponent();
         }
+
+        private bool isFileLoaded;
+        public bool IsFileLoaded
+        {
+            get => isFileLoaded;
+            set
+            {
+                if (isFileLoaded != value)
+                {
+                    isFileLoaded = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        public delegate void ChangeState(Option option);
+        public event ChangeState ChangeStateEvent;
 
         public void CryptSymmetric_Click(object sender, RoutedEventArgs e)
         {

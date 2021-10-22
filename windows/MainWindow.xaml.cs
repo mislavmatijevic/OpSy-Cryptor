@@ -7,9 +7,6 @@ using System.Windows;
 
 namespace OpSy_Cryptor
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
 
@@ -46,8 +43,8 @@ namespace OpSy_Cryptor
         {
             try
             {
-                Encryption.Object.LoadPrivateKeyECDH(ReadKeyFromFile("privatni_kljuc.txt"));
-                Encryption.Object.LoadSecretKeyAES(ReadKeyFromFile("tajni_kljuc.txt"));
+                EncryptionClass.GetInstance().LoadPrivateKeyECDH(ReadKeyFromFile("privatni_kljuc.txt"));
+                EncryptionClass.GetInstance().LoadSecretKeyAES(ReadKeyFromFile("tajni_kljuc.txt"));
             }
             catch (Exception ex)
             {
@@ -83,10 +80,10 @@ namespace OpSy_Cryptor
                         contentControl.Content = new CryptAsymmetric(selectedFile);
                         break;
                     case Option.CalculateHash:
-                        contentControl.Content = new HelpScreen();
+                        contentControl.Content = new GetFileHash(selectedFile);
                         break;
                     case Option.DigitalSignature:
-                        contentControl.Content = new HelpScreen();
+                        contentControl.Content = new CreateSignature(selectedFile, UserObject.Id.ToString());
                         break;
                     case Option.CheckSignature:
                         contentControl.Content = new HelpScreen();
@@ -101,6 +98,7 @@ namespace OpSy_Cryptor
         {
             selectedFile = _selectedFile;
             loadedFileTextBlock.Text = $"Učitana datoteka: {selectedFile.Path}";
+            navMenu.IsFileLoaded = true;
         }
     }
 }

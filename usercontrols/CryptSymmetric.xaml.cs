@@ -1,29 +1,15 @@
-﻿using OpSy_Cryptor.common;
+﻿using Microsoft.Win32;
+using OpSy_Cryptor.common;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace OpSy_Cryptor.usercontrols
 {
-    /// <summary>
-    /// Interaction logic for CryptSymmetric.xaml
-    /// </summary>
     public partial class CryptSymmetric : UserControl
     {
-
-        private SelectedFile selectedFile;
+        private readonly SelectedFile selectedFile;
 
         public CryptSymmetric(SelectedFile _selectedFile)
         {
@@ -33,12 +19,34 @@ namespace OpSy_Cryptor.usercontrols
             decryptButton.Content = $"Dekriptiraj {selectedFile.Name}";
         }
 
+        private string ChooseSecretKey()
+        {
+            if (useLocalSecretKey.IsChecked == false)
+            {
+                OpenFileDialog openFileDialog = new();
+                openFileDialog.ShowDialog();
+                if (!string.IsNullOrWhiteSpace(openFileDialog.FileName) && openFileDialog.CheckPathExists)
+                {
+                    string path = openFileDialog.FileName;
+                    return File.ReadAllText(path);
+                }
+                else
+                {
+                    useLocalSecretKey.IsChecked = false;
+                }
+            }
+            return EncryptionClass.GetInstance().GetSecretKey;
+        }
+
         private async void CryptButton_Click(object sender, RoutedEventArgs e)
         {
+            string secretKey = ChooseSecretKey();
             try
             {
-                string encryptedFile = Encryption.Object.EncryptSymmetricAES(selectedFile.Contents, Encryption.Object.GetSecretKey);
-                await File.WriteAllTextAsync(selectedFile.Path + "_encrypted.txt", encryptedFile);
+                string encryptedFile = EncryptionClass.GetInstance().EncryptSymmetricAES(selectedFile.Contents, secretKey);
+                string path = selectedFile.Path + "__simetrično-kriptirano.txt";
+                await File.WriteAllTextAsync(path, encryptedFile);
+                ExplorerNavigator.NavigateWindowsExplorerTo(path);
             }
             catch (Exception ex)
             {
@@ -48,10 +56,26 @@ namespace OpSy_Cryptor.usercontrols
 
         private async void DecryptButton_Click(object sender, RoutedEventArgs e)
         {
+            string secretKey = ChooseSecretKey();
             try
             {
-                byte[] decryptedFile = Encryption.Object.DecryptSymmetricAES(selectedFile.Contents, Encryption.Object.GetSecretKey);
-                await File.WriteAllBytesAsync(selectedFile.Path + "_decrypted", decryptedFile);
+                byte[] decryptedFile = EncryptionClass.GetInstance().DecryptSymmetricAES(selectedFile.Contents, secretKey);
+
+                string path = selectedFile.Path + "__simetrično-dekriptirano";
+
+                if (selectedFile.Path.Contains("__simetrično-kriptirano.txt"))
+                {
+                    string purePath = selectedFile.Path.Split("__simetrično-kriptirano.txt")[0];
+
+                    int startIndex = purePath.LastIndexOf(".") + 1;
+                    string extension = purePath[startIndex..];
+                    purePath = purePath.Substring(0, purePath.LastIndexOf('.'));
+
+                    path = $"{purePath}__simetrično-dekriptirano.{extension}";
+                }
+
+                await File.WriteAllBytesAsync(path, decryptedFile);
+                ExplorerNavigator.NavigateWindowsExplorerTo(path);
             }
             catch (Exception ex)
             {

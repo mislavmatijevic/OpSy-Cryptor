@@ -6,9 +6,6 @@ using System.Windows.Input;
 
 namespace OpSy_Cryptor
 {
-    /// <summary>
-    /// Interaction logic for LoginWindow.xaml
-    /// </summary>
     public partial class LoginWindow : Window
     {
         private RegisterWindow registerWindow;

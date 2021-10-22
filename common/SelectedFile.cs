@@ -5,14 +5,12 @@
         public SelectedFile(string path, byte[] contents)
         {
             Path = path;
-            Name = Path[Path.LastIndexOf('\\')..];
+            Name = Path[(Path.LastIndexOf('\\') + 1)..];
             Contents = contents;
         }
 
         public string Name { get; }
         public string Path { get; }
         public byte[] Contents { get; }
-        public string SHA256Hash { get; set; } = "";
-        public string EncryptedContent { get; set; } = "";
     }
 }

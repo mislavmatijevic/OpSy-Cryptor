@@ -3,16 +3,12 @@ using OpSy_Cryptor.common;
 using OpSy_Cryptor.database;
 using OpSy_Cryptor.model;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
 namespace OpSy_Cryptor
 {
-    /// <summary>
-    /// Interaction logic for RegisterWindow.xaml
-    /// </summary>
     public partial class RegisterWindow : Window
     {
         private string pathToDirectory = $"{AppDomain.CurrentDomain.BaseDirectory}OpSy Generirano";
@@ -87,9 +83,9 @@ namespace OpSy_Cryptor
             pathToDirectory += $" {((User)Tag).Username}";
 
             Directory.CreateDirectory(pathToDirectory);
-            CreateKeyFile("javni_kljuc.txt", Encryption.Object.GetPublicKey);
-            CreateKeyFile("privatni_kljuc.txt", Encryption.Object.GetPrivateKey);
-            CreateKeyFile("tajni_kljuc.txt", Encryption.Object.GetSecretKey);
+            CreateKeyFile("javni_kljuc.txt", EncryptionClass.GetInstance().GetPublicKey);
+            CreateKeyFile("privatni_kljuc.txt", EncryptionClass.GetInstance().GetPrivateKey);
+            CreateKeyFile("tajni_kljuc.txt", EncryptionClass.GetInstance().GetSecretKey);
 
             MessageBoxResult result = MessageBox.Show($"Korisnički podaci:\n" +
                 $"ID: {user.Id}\n" +
@@ -99,10 +95,7 @@ namespace OpSy_Cryptor
                 $"Želite li pogledati nove datoteke?", "Registracija obavljena", MessageBoxButton.YesNo, MessageBoxImage.Information);
             if (result == MessageBoxResult.Yes)
             {
-                Process ExplorerWindowProcess = new();
-                ExplorerWindowProcess.StartInfo.FileName = "explorer.exe";
-                ExplorerWindowProcess.StartInfo.Arguments = $"/select,\"{pathToDirectory}\\javni_kljuc.txt\"";
-                ExplorerWindowProcess.Start();
+                ExplorerNavigator.NavigateWindowsExplorerTo(pathToDirectory + "\\javni_kljuc.txt");
             }
             Close();
         }

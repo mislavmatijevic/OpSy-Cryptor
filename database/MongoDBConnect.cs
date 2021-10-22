@@ -5,11 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace OpSy_Cryptor.database
 {
-    internal class MongoDBConnect
+    public class MongoDBConnect
     {
         private MongoClient DbClient { get; set; }
 
@@ -17,6 +18,17 @@ namespace OpSy_Cryptor.database
         {
             string mongoPass = ConfigurationManager.AppSettings.Get("MongoDbPass");
             DbClient = new MongoClient($"mongodb+srv://OpSy-Cryptor:{mongoPass}@opsy.yn6sn.mongodb.net/OpSyDB?retryWrites=true&w=majority");
+        }
+
+        private static MongoDBConnect instance;
+
+        public static MongoDBConnect GetInstance()
+        {
+            if (instance is not null)
+            {
+                instance = new();
+            }
+            return instance;
         }
 
         /*
@@ -27,11 +39,11 @@ namespace OpSy_Cryptor.database
             IMongoDatabase db = DbClient.GetDatabase("OpSyDB");
             IMongoCollection<User> collections = db.GetCollection<User>("users");
 
-            string salt = Encryption.GetSalt();
+            string salt = EncryptionClass.GetSalt();
 
-            Encryption.Object.GenerateKeys();
+            EncryptionClass.GetInstance().GenerateKeys();
 
-            await collections.InsertOneAsync(new User { Username = username, Salt = salt, Password = Encryption.GetHashSHA256(salt + password), PubKey = Encryption.Object.GetPublicKey });
+            await collections.InsertOneAsync(new User { Username = username, Salt = salt, Password = EncryptionClass.GetHashSHA256(Encoding.ASCII.GetBytes(salt + password)), PubKey = EncryptionClass.GetInstance().GetPublicKey });
             return collections.AsQueryable().Where(sb => sb.Username == username).ToList()[0];
         }
 
@@ -39,7 +51,7 @@ namespace OpSy_Cryptor.database
         {
             IMongoDatabase db = DbClient.GetDatabase("OpSyDB");
             IMongoCollection<User> collections = db.GetCollection<User>("users");
-            var received = await collections.FindAsync(sb => sb.Username == username);
+            IAsyncCursor<User> received = await collections.FindAsync(sb => sb.Username == username);
             List<User> listWithUser = await received.ToListAsync();
 
             if (listWithUser.Count == 0)
@@ -47,7 +59,7 @@ namespace OpSy_Cryptor.database
                 throw new Exception("Korisnik ne postoji!");
             }
 
-            if (listWithUser[0].Password != Encryption.GetHashSHA256(listWithUser[0].Salt + password))
+            if (listWithUser[0].Password != EncryptionClass.GetHashSHA256(Encoding.ASCII.GetBytes(listWithUser[0].Salt + password)))
             {
                 throw new Exception("Pogrešna lozinka!");
             }
@@ -59,7 +71,7 @@ namespace OpSy_Cryptor.database
         {
             IMongoDatabase db = DbClient.GetDatabase("OpSyDB");
             IMongoCollection<User> collections = db.GetCollection<User>("users");
-            var received = await collections.FindAsync(user => user.Username == username);
+            IAsyncCursor<User> received = await collections.FindAsync(user => user.Username == username);
             return await received.ToListAsync();
         }
 

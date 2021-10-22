@@ -7,18 +7,26 @@ using System.Text.RegularExpressions;
 
 namespace OpSy_Cryptor.common
 {
-    public class Encryption : IDisposable
+    internal struct KeyPairs
+    {
+        public byte[] privateKey;
+        public byte[] publicKey;
+        public byte[] secretKey;
+    }
+    public class EncryptionClass : IDisposable
     {
         private static readonly string CONTENT_BEGIN = "-----ENKRIPTIRANI SADRŽAJ-----";
         private static readonly string CONTENT_END = "-----KRAJ ENKRIPTIRANOG SADRŽAJA-----";
         private static readonly string IV_BEGIN = "-----INICIJALIZACIJSKI VEKTOR-----";
         private static readonly string IV_END = "-----KRAJ INICIJALIZACIJSKOG VEKTORA-----";
+        private static readonly string SIGNATURE = "POTPISNIK";
 
         private ECDiffieHellmanCng diffieHellmanObject;
         private readonly Aes aesObject;
         private readonly byte[] initializationVector;
+        private KeyPairs StructKeys;
 
-        private Encryption()
+        private EncryptionClass()
         {
             aesObject = new AesCryptoServiceProvider // 256bit
             {
@@ -28,7 +36,16 @@ namespace OpSy_Cryptor.common
             initializationVector = aesObject.IV;
         }
 
-        public static readonly Encryption Object = new();
+        private static EncryptionClass instance;
+
+        public static EncryptionClass GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new();
+            }
+            return instance;
+        }
 
         public void Dispose()
         {
@@ -40,29 +57,22 @@ namespace OpSy_Cryptor.common
         {
             if (disposing)
             {
-                if (aesObject != null)
+                if (aesObject is not null)
                 {
                     aesObject.Dispose();
                 }
             }
         }
-        public struct KeyPairs
-        {
-            public byte[] privateKey;
-            public byte[] publicKey;
-            public byte[] secretKey;
-        }
-        private KeyPairs StructKeys;
 
-        public void LoadSecretKeyAES(string secretKeyBase64String)
+        public void LoadSecretKeyAES(string secretKeyBase64)
         {
-            aesObject.Key = Convert.FromBase64String(secretKeyBase64String);
+            aesObject.Key = Convert.FromBase64String(secretKeyBase64);
             StructKeys.secretKey = aesObject.Key;
         }
 
-        public void LoadPrivateKeyECDH(string privateKeyBase64String)
+        public void LoadPrivateKeyECDH(string privateKeyBase64)
         {
-            StructKeys.privateKey = Convert.FromBase64String(privateKeyBase64String);
+            StructKeys.privateKey = Convert.FromBase64String(privateKeyBase64);
             byte[] publicKey;
 
             diffieHellmanObject = new ECDiffieHellmanCng(CngKey.Import(StructKeys.privateKey, CngKeyBlobFormat.EccPrivateBlob))
@@ -72,7 +82,7 @@ namespace OpSy_Cryptor.common
             };
             publicKey = diffieHellmanObject.PublicKey.ToByteArray();
 
-            StructKeys.privateKey = Convert.FromBase64String(privateKeyBase64String);
+            StructKeys.privateKey = Convert.FromBase64String(privateKeyBase64);
             StructKeys.publicKey = publicKey.ToArray();
         }
 
@@ -92,23 +102,23 @@ namespace OpSy_Cryptor.common
                 privateKey = diffieHellmanKey.Key.Export(CngKeyBlobFormat.EccPrivateBlob);
             }
 
-            string privateKeyBase64String = Convert.ToBase64String(privateKey.ToArray());
+            string privateKeyBase64 = Convert.ToBase64String(privateKey.ToArray());
 
             aesObject.GenerateKey();
             StructKeys.secretKey = aesObject.Key;
 
-            LoadPrivateKeyECDH(privateKeyBase64String);
+            LoadPrivateKeyECDH(privateKeyBase64);
         }
         public string GetPrivateKey => Convert.ToBase64String(StructKeys.privateKey);
         public string GetPublicKey => Convert.ToBase64String(StructKeys.publicKey);
         public string GetIV => Convert.ToBase64String(initializationVector);
         public string GetSecretKey => Convert.ToBase64String(StructKeys.secretKey);
 
-        public string EncryptSymmetricAES(byte[] readableContent, string secretKeyBase64String)
+        public string EncryptSymmetricAES(byte[] readableContent, string secretKeyBase64)
         {
             try
             {
-                aesObject.Key = Convert.FromBase64String(secretKeyBase64String);
+                aesObject.Key = Convert.FromBase64String(secretKeyBase64);
             }
             catch (Exception e)
             {
@@ -138,9 +148,9 @@ namespace OpSy_Cryptor.common
             return $"{CONTENT_BEGIN}\n{encryptedContents}\n{CONTENT_END}\n{IV_BEGIN}\n{GetIV}\n{IV_END}";
         }
 
-        public string EncryptAsymmetricECDH(byte[] readableContent, string receiverPublicKeyBase64String)
+        public string EncryptAsymmetricECDH(byte[] readableContent, string receiverPublicKeyBase64)
         {
-            if (receiverPublicKeyBase64String == Convert.ToBase64String(StructKeys.publicKey))
+            if (receiverPublicKeyBase64 == Convert.ToBase64String(StructKeys.publicKey))
             {
                 throw new Exception("Potreban je primateljev javni ključ, a ne vaš!");
             }
@@ -149,7 +159,7 @@ namespace OpSy_Cryptor.common
             CngKey receiverPublicKeyImported;
             try
             {
-                receiverPublicKeyBytes = Convert.FromBase64String(receiverPublicKeyBase64String);
+                receiverPublicKeyBytes = Convert.FromBase64String(receiverPublicKeyBase64);
                 receiverPublicKeyImported = CngKey.Import(receiverPublicKeyBytes, CngKeyBlobFormat.EccPublicBlob);
             }
             catch (Exception e)
@@ -163,12 +173,12 @@ namespace OpSy_Cryptor.common
             return EncryptSymmetricAES(readableContent, symmetricKey);
         }
 
-        public byte[] DecryptSymmetricAES(byte[] cryptedContent, string secretKeyBase64String)
+        public byte[] DecryptSymmetricAES(byte[] cryptedContent, string secretKeyBase64)
         {
-            return DecryptSymmetricAES(Encoding.UTF8.GetString(cryptedContent), secretKeyBase64String);
+            return DecryptSymmetricAES(Encoding.UTF8.GetString(cryptedContent), secretKeyBase64);
         }
 
-        public byte[] DecryptSymmetricAES(string cryptedContent, string secretKeyBase64String)
+        public byte[] DecryptSymmetricAES(string cryptedContent, string secretKeyBase64)
         {
             if (!Regex.IsMatch(cryptedContent, "-----ENKRIPTIRANI SADRŽAJ-----\n.+\n-----KRAJ ENKRIPTIRANOG SADRŽAJA-----\n-----INICIJALIZACIJSKI VEKTOR-----\n.+\n-----KRAJ INICIJALIZACIJSKOG VEKTORA-----"))
             {
@@ -181,13 +191,13 @@ namespace OpSy_Cryptor.common
                     $"{IV_END}\n\n");
             }
 
-            string cryptedContentBase64String = cryptedContent.Split('\n')[1];
-            string initializationVectorBase64String = cryptedContent.Split('\n')[4];
+            string cryptedContentBase64 = cryptedContent.Split('\n')[1];
+            string initializationVectorBase64 = cryptedContent.Split('\n')[4];
 
             byte[] cryptedContentBytes;
             try
             {
-                cryptedContentBytes = Convert.FromBase64String(cryptedContentBase64String);
+                cryptedContentBytes = Convert.FromBase64String(cryptedContentBase64);
             }
             catch
             {
@@ -196,18 +206,16 @@ namespace OpSy_Cryptor.common
 
             try
             {
-                aesObject.Key = Convert.FromBase64String(secretKeyBase64String);
+                aesObject.Key = Convert.FromBase64String(secretKeyBase64);
             }
             catch (Exception e)
             {
                 throw new Exception($"Ključ nije ispravan za AES!\n{e}");
             }
 
-            byte[] initializationVectorCurrent;
             try
             {
-                initializationVectorCurrent = Convert.FromBase64String(initializationVectorBase64String);
-                aesObject.IV = initializationVectorCurrent;
+                aesObject.IV = Convert.FromBase64String(initializationVectorBase64);
             }
             catch (Exception e)
             {
@@ -235,14 +243,14 @@ namespace OpSy_Cryptor.common
             return readableContent;
         }
 
-        public byte[] DecryptAsymmetricECDH(byte[] cryptedContent, string senderPublicKeyBase64String)
+        public byte[] DecryptAsymmetricECDH(byte[] cryptedContent, string senderPublicKeyBase64)
         {
-            return DecryptAsymmetricECDH(Encoding.UTF8.GetString(cryptedContent), senderPublicKeyBase64String);
+            return DecryptAsymmetricECDH(Encoding.UTF8.GetString(cryptedContent), senderPublicKeyBase64);
         }
 
-        public byte[] DecryptAsymmetricECDH(string cryptedContent, string senderPublicKeyBase64String)
+        public byte[] DecryptAsymmetricECDH(string cryptedContent, string senderPublicKeyBase64)
         {
-            if (senderPublicKeyBase64String == Convert.ToBase64String(StructKeys.publicKey))
+            if (senderPublicKeyBase64 == Convert.ToBase64String(StructKeys.publicKey))
             {
                 throw new Exception($"Potreban je pošiljateljev javni ključ, a ne vaš!");
             }
@@ -251,7 +259,7 @@ namespace OpSy_Cryptor.common
             CngKey senderPublicKeyImport;
             try
             {
-                senderPublicKeyBytes = Convert.FromBase64String(senderPublicKeyBase64String);
+                senderPublicKeyBytes = Convert.FromBase64String(senderPublicKeyBase64);
                 senderPublicKeyImport = CngKey.Import(senderPublicKeyBytes, CngKeyBlobFormat.EccPublicBlob);
             }
             catch (Exception e)
@@ -261,15 +269,33 @@ namespace OpSy_Cryptor.common
 
             // Ključ za simetrični AES dobiva se derivacijom javnog ključa pošiljatelja i privatnog ključa korisnika.
             byte[] symmetricKey = diffieHellmanObject.DeriveKeyMaterial(senderPublicKeyImport);
-            string symmetricKeyBase64String = Convert.ToBase64String(symmetricKey);
+            string symmetricKeyBase64 = Convert.ToBase64String(symmetricKey);
 
-            return DecryptSymmetricAES(cryptedContent, symmetricKeyBase64String);
+            return DecryptSymmetricAES(cryptedContent, symmetricKeyBase64);
         }
 
-        public static string GetHashSHA256(string content)
+        public string Sign(byte[] binaryContent)
+        {
+            CngKey privateKeyImported;
+            try
+            {
+                byte[] privateKeyBytes = Convert.FromBase64String(GetPrivateKey);
+                privateKeyImported = CngKey.Import(privateKeyBytes, CngKeyBlobFormat.EccFullPrivateBlob);
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Nešto je pošlo po zlu s privatnim ključem:\n\n{e}");
+            }
+            // Secret AES key is derived from private key.
+            string symmetricKey = Convert.ToBase64String(diffieHellmanObject.DeriveKeyMaterial(privateKeyImported));
+
+            return EncryptSymmetricAES(binaryContent, symmetricKey) + $"\n{SIGNATURE}: ";
+        }
+
+        public static string GetHashSHA256(byte[] binaryContent)
         {
             using SHA256 mySHA256 = SHA256.Create();
-            byte[] hashedContent = mySHA256.ComputeHash(Encoding.ASCII.GetBytes(content));
+            byte[] hashedContent = mySHA256.ComputeHash(binaryContent);
             return Convert.ToBase64String(hashedContent);
         }
 

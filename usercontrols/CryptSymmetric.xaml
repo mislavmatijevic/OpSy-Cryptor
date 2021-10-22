@@ -10,13 +10,26 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="50" />
             <RowDefinition Height="50" />
+            <RowDefinition Height="25" />
             <RowDefinition Height="*" />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
-        <TextBlock FontSize="42" FontFamily="Bahnschrift Light" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Foreground="#FFAA2F3C" VerticalAlignment="Center" Margin="3,0,10,0">Simetrična kriptografija</TextBlock>
-
-        <Button x:Name="cryptButton" Padding="0 -2 0 0" Grid.Column="1" Grid.Row="2" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" Content="Kriptiraj datoteku xy.txt" Margin="10,10,10,10" FontSize="15" Click="CryptButton_Click" />
         
-        <Button x:Name="decryptButton" Padding="0 -2 0 0" Grid.Column="1" Grid.Row="3" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" Content="Dekriptiraj datoteku xy.txt" Margin="10,10,10,10" FontSize="15" Click="DecryptButton_Click" />
+        <TextBlock FontSize="42" FontFamily="Bahnschrift Light" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Foreground="#FFEA6270" VerticalAlignment="Bottom" Margin="3,0,0,45">Simetrična kriptografija</TextBlock>
+        <TextBlock FontSize="20" FontFamily="Bahnschrift Light" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Foreground="#FFAA2F3C" Margin="20,0,0,20" Height="24" VerticalAlignment="Bottom">Advanced Encryption Standard (AES)</TextBlock>
+        
+        <Button x:Name="cryptButton" Padding="0 -2 0 0" Grid.Column="1" Grid.Row="2" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" Content="Kriptiraj datoteku xy.txt" Margin="10,10,10,10" FontSize="15" Click="CryptButton_Click">
+            <Button.Effect>
+                <DropShadowEffect />
+            </Button.Effect>
+        </Button>
+
+        <Button x:Name="decryptButton" Padding="0 -2 0 0" Grid.Column="1" Grid.Row="3" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" Content="Dekriptiraj datoteku xy.txt" Margin="10,10,10,10" FontSize="15" Click="DecryptButton_Click">
+            <Button.Effect>
+                <DropShadowEffect />
+            </Button.Effect>
+        </Button>
+
+        <CheckBox x:Name="useLocalSecretKey" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Content="Koristi ključ iz direktorija s ključevima?" IsChecked="True" Margin="30 0 0 0"  Foreground="#EEF58D96" />
     </Grid>
 </UserControl>

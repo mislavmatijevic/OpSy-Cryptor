@@ -13,11 +13,17 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
-        <TextBlock FontSize="42" FontFamily="Bahnschrift Light" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Foreground="#FFAA2F3C" VerticalAlignment="Center" Margin="3,0,10,0">Učitaj datoteku</TextBlock>
+
+        <TextBlock FontSize="42" FontFamily="Bahnschrift Light" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Foreground="#FFEA6270" VerticalAlignment="Bottom" Margin="3,0,0,45">Učitaj datoteku</TextBlock>
+        <TextBlock FontSize="20" FontFamily="Bahnschrift Light" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Foreground="#FFAA2F3C" Margin="20,0,0,20" Height="24" VerticalAlignment="Bottom">Kriptografija će se izvršavati nad ovom datotekom</TextBlock>
 
         <Label Padding="5 10 0 0" Grid.Column="1" Grid.Row="2" FontFamily="Bahnschrift Light" Height="40" VerticalAlignment="Center" Margin="10,0,10,0" FontSize="24" Foreground="White">Datoteka:</Label>
 
-        <Button x:Name="loadFileButton" Padding="0 -2 0 0" Grid.Column="1" Grid.Row="3" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" Content="Odaberi" Margin="10,10,10,10" FontSize="15" Click="LoadFile_Click" />
+        <Button x:Name="loadFileButton" Padding="0 -2 0 0" Grid.Column="1" Grid.Row="3" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" Content="Odaberi" Margin="10,10,10,10" FontSize="15" Click="LoadFile_Click">
+            <Button.Effect>
+                <DropShadowEffect />
+            </Button.Effect>
+        </Button>
     </Grid>
 
 </UserControl>
