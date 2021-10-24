@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using OpSy_Cryptor.common;
 using OpSy_Cryptor.model;
 using System;
@@ -14,7 +15,7 @@ namespace OpSy_Cryptor.database
     {
         private MongoClient DbClient { get; set; }
 
-        public MongoDBConnect()
+        private MongoDBConnect()
         {
             string mongoPass = ConfigurationManager.AppSettings.Get("MongoDbPass");
             DbClient = new MongoClient($"mongodb+srv://OpSy-Cryptor:{mongoPass}@opsy.yn6sn.mongodb.net/OpSyDB?retryWrites=true&w=majority");
@@ -24,7 +25,7 @@ namespace OpSy_Cryptor.database
 
         public static MongoDBConnect GetInstance()
         {
-            if (instance is not null)
+            if (instance is null)
             {
                 instance = new();
             }
@@ -43,11 +44,26 @@ namespace OpSy_Cryptor.database
 
             EncryptionClass.GetInstance().GenerateKeys();
 
-            await collections.InsertOneAsync(new User { Username = username, Salt = salt, Password = EncryptionClass.GetHashSHA256(Encoding.ASCII.GetBytes(salt + password)), PubKey = EncryptionClass.GetInstance().GetPublicKey });
+            await collections.InsertOneAsync(new User { Username = username, Salt = salt, Password = Convert.ToBase64String(EncryptionClass.GetHashSHA256(Encoding.ASCII.GetBytes(salt + password))), PubKey = EncryptionClass.GetInstance().GetPublicKey });
             return collections.AsQueryable().Where(sb => sb.Username == username).ToList()[0];
         }
 
-        private async Task<User> GetUserFromDBAsync(string username, string password)
+        public async Task<User> GetUserByIdAsync(string userObjectID)
+        {
+            IMongoDatabase db = DbClient.GetDatabase("OpSyDB");
+            IMongoCollection<User> collections = db.GetCollection<User>("users");
+            IAsyncCursor<User> received = await collections.FindAsync(sb => sb.Id == ObjectId.Parse(userObjectID));
+            List<User> listWithUser = await received.ToListAsync();
+
+            if (listWithUser.Count == 0)
+            {
+                throw new Exception("Korisnik ne postoji!");
+            }
+
+            return listWithUser[0];
+        }
+
+        private async Task<User> GetUserAsync(string username)
         {
             IMongoDatabase db = DbClient.GetDatabase("OpSyDB");
             IMongoCollection<User> collections = db.GetCollection<User>("users");
@@ -59,28 +75,30 @@ namespace OpSy_Cryptor.database
                 throw new Exception("Korisnik ne postoji!");
             }
 
-            if (listWithUser[0].Password != EncryptionClass.GetHashSHA256(Encoding.ASCII.GetBytes(listWithUser[0].Salt + password)))
+            return listWithUser[0];
+        }
+
+        public async Task<User> LoginUserAsync(string username, string password)
+        {
+            User foundUser = await GetUserAsync(username);
+
+            if (foundUser.Password != Convert.ToBase64String(EncryptionClass.GetHashSHA256(Encoding.ASCII.GetBytes(foundUser.Salt + password))))
             {
                 throw new Exception("Pogrešna lozinka!");
             }
 
-            return listWithUser[0];
+            return foundUser;
         }
 
         public async Task<List<User>> GetUsersFromDBAsync(string username)
         {
             IMongoDatabase db = DbClient.GetDatabase("OpSyDB");
             IMongoCollection<User> collections = db.GetCollection<User>("users");
-            IAsyncCursor<User> received = await collections.FindAsync(user => user.Username == username);
-            return await received.ToListAsync();
-        }
 
-        /*
-         * Logs-in user, returns ObjectID of new user on success.
-        */
-        public async Task<User> LoginUserAsync(string username, string password)
-        {
-            return await Task.Run(async () => await GetUserFromDBAsync(username, password));
+            FilterDefinition<User> filter = Builders<User>.Filter.Regex(user => user.Username, username);
+
+            List<User> received = await collections.Aggregate().Match(filter).ToListAsync();
+            return received;
         }
     }
 }

@@ -37,8 +37,7 @@ namespace OpSy_Cryptor
                 password2TextBox.IsEnabled = false;
                 try
                 {
-                    MongoDBConnect dBConnect = new();
-                    User user = await dBConnect.RegisterUserAsync(usernameTextBox.Text, password1TextBox.Password);
+                    User user = await MongoDBConnect.GetInstance().RegisterUserAsync(usernameTextBox.Text, password1TextBox.Password);
                     Tag = user;
                     CompleteRegistration(user);
                 }

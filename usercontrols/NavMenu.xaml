@@ -70,20 +70,20 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition Height="50" />
-            <RowDefinition Height="22*" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="47*" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="47*" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="47*" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="47*" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="50*" />
+            <RowDefinition Height="49*" MaxHeight="65" />
+            <RowDefinition Height="43*" />
+            <RowDefinition Height="49*" MaxHeight="65" />
+            <RowDefinition Height="43*" />
+            <RowDefinition Height="49*" MaxHeight="65" />
+            <RowDefinition Height="43*" />
+            <RowDefinition Height="49*" MaxHeight="65" />
+            <RowDefinition Height="43*" />
+            <RowDefinition Height="49*" MaxHeight="65" />
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
 
-        <Button IsEnabled="True" FontFamily="Bahnschrift Light" Content="Učitaj datoteku" Grid.Row="1" BorderBrush="Black" FontSize="22" RenderTransformOrigin="0.5,0.5" Click="LoadFile_Click" Grid.ColumnSpan="2" Margin="10,0,10,22" Grid.RowSpan="2"  Style="{StaticResource MyButton2}">
+        <Button IsEnabled="True" FontFamily="Bahnschrift Light" Content="Učitaj datoteku" Grid.Row="1" BorderBrush="Black" FontSize="22" RenderTransformOrigin="0.5,0.5" Click="LoadFile_Click" Grid.ColumnSpan="2" Margin="10,0,10,0" Style="{StaticResource MyButton2}">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFA02633" />
@@ -95,8 +95,8 @@
             </Button.Effect>
         </Button>
 
-        <Button FontFamily="Bahnschrift Light" Content="Kriptiraj simetrično" Grid.Row="3" Click="CryptSymmetric_Click" Style="{StaticResource MyButton2}" />
-        <Button FontFamily="Bahnschrift Light" Content="Kriptiraj asimetrično" Grid.Row="5" Click="CryptAsymmetric_Click" Style="{StaticResource MyButton2}" />
+        <Button FontFamily="Bahnschrift Light" Content="Kriptiraj simetrično" Grid.Row="3" Click="CryptSymmetric_Click" Style="{StaticResource MyButton2}" Margin="0,0,0,0" />
+        <Button FontFamily="Bahnschrift Light" Content="Kriptiraj asimetrično" Grid.Row="5" Click="CryptAsymmetric_Click" Style="{StaticResource MyButton2}" Margin="0,0,0,0" />
         <Button FontFamily="Bahnschrift Light" Content="Izračunaj sažetak" Grid.Row="7" Click="CalculateHash_Click" Style="{StaticResource MyButton2}" />
         <Button FontFamily="Bahnschrift Light" Content="Digitalno potpiši" Grid.Row="9" Click="DigitallySign_Click" Style="{StaticResource MyButton2}" />
         <Button FontFamily="Bahnschrift Light" Content="Provjeri potpis" Grid.Row="11" Click="CheckSignature_Click" Style="{StaticResource MyButton2}" />

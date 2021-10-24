@@ -33,10 +33,12 @@ namespace OpSy_Cryptor.usercontrols
 
         public GetFileHash(SelectedFile _selectedFile)
         {
-            hashedContentBase64 = EncryptionClass.GetHashSHA256(_selectedFile.Contents);
-            hashedContentHex = BitConverter.ToString(Convert.FromBase64String(hashedContentBase64)).Replace("-", "");
+            hashedContentBase64 = Convert.ToBase64String(_selectedFile.SHA256Hash);
+            hashedContentHex = BitConverter.ToString(_selectedFile.SHA256Hash).Replace("-", "");
+
             DataContext = this;
             InitializeComponent();
+
             selectedFile = _selectedFile;
         }
 

@@ -86,7 +86,7 @@ namespace OpSy_Cryptor
                         contentControl.Content = new CreateSignature(selectedFile, UserObject.Id.ToString());
                         break;
                     case Option.CheckSignature:
-                        contentControl.Content = new HelpScreen();
+                        contentControl.Content = new ConfirmSignature(selectedFile);
                         break;
                     default:
                         break;

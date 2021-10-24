@@ -23,7 +23,7 @@ namespace OpSy_Cryptor.common
         private ECDiffieHellmanCng diffieHellmanObject;
         private readonly Aes aesObject;
         private readonly byte[] initializationVector;
-        private KeyPairs StructKeys;
+        private KeyPairs keyPairs;
 
         private EncryptionClass()
         {
@@ -66,23 +66,23 @@ namespace OpSy_Cryptor.common
         public void LoadSecretKeyAES(string secretKeyBase64)
         {
             aesObject.Key = Convert.FromBase64String(secretKeyBase64);
-            StructKeys.secretKey = aesObject.Key;
+            keyPairs.secretKey = aesObject.Key;
         }
 
         public void LoadPrivateKeyECDH(string privateKeyBase64)
         {
-            StructKeys.privateKey = Convert.FromBase64String(privateKeyBase64);
+            keyPairs.privateKey = Convert.FromBase64String(privateKeyBase64);
             byte[] publicKey;
 
-            diffieHellmanObject = new ECDiffieHellmanCng(CngKey.Import(StructKeys.privateKey, CngKeyBlobFormat.EccPrivateBlob))
+            diffieHellmanObject = new ECDiffieHellmanCng(CngKey.Import(keyPairs.privateKey, CngKeyBlobFormat.EccPrivateBlob))
             {
                 KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash,
                 HashAlgorithm = CngAlgorithm.Sha256
             };
             publicKey = diffieHellmanObject.PublicKey.ToByteArray();
 
-            StructKeys.privateKey = Convert.FromBase64String(privateKeyBase64);
-            StructKeys.publicKey = publicKey.ToArray();
+            keyPairs.privateKey = Convert.FromBase64String(privateKeyBase64);
+            keyPairs.publicKey = publicKey.ToArray();
         }
 
         // Defines and loads a private key for ECDH and allows its export out of DH object. Loading it derives public key. Secret AES key is created seperately.
@@ -104,14 +104,14 @@ namespace OpSy_Cryptor.common
             string privateKeyBase64 = Convert.ToBase64String(privateKey.ToArray());
 
             aesObject.GenerateKey();
-            StructKeys.secretKey = aesObject.Key;
+            keyPairs.secretKey = aesObject.Key;
 
             LoadPrivateKeyECDH(privateKeyBase64);
         }
-        public string GetPrivateKey => Convert.ToBase64String(StructKeys.privateKey);
-        public string GetPublicKey => Convert.ToBase64String(StructKeys.publicKey);
+        public string GetPrivateKey => Convert.ToBase64String(keyPairs.privateKey);
+        public string GetPublicKey => Convert.ToBase64String(keyPairs.publicKey);
         public string GetIV => Convert.ToBase64String(initializationVector);
-        public string GetSecretKey => Convert.ToBase64String(StructKeys.secretKey);
+        public string GetSecretKey => Convert.ToBase64String(keyPairs.secretKey);
 
         public string EncryptSymmetricAES(byte[] readableContent, string secretKeyBase64)
         {
@@ -149,7 +149,7 @@ namespace OpSy_Cryptor.common
 
         public string EncryptAsymmetricECDH(byte[] readableContent, string receiverPublicKeyBase64)
         {
-            if (receiverPublicKeyBase64 == Convert.ToBase64String(StructKeys.publicKey))
+            if (receiverPublicKeyBase64 == Convert.ToBase64String(keyPairs.publicKey))
             {
                 throw new Exception("Potreban je primateljev javni ključ, a ne vaš!");
             }
@@ -249,7 +249,7 @@ namespace OpSy_Cryptor.common
 
         public byte[] DecryptAsymmetricECDH(string cryptedContent, string senderPublicKeyBase64)
         {
-            if (senderPublicKeyBase64 == Convert.ToBase64String(StructKeys.publicKey))
+            if (senderPublicKeyBase64 == Convert.ToBase64String(keyPairs.publicKey))
             {
                 throw new Exception($"Potreban je pošiljateljev javni ključ, a ne vaš!");
             }
@@ -273,22 +273,24 @@ namespace OpSy_Cryptor.common
             return DecryptSymmetricAES(cryptedContent, symmetricKeyBase64);
         }
 
-        public string Sign(byte[] binaryContent, string signature)
+        public string GetSignature(byte[] binaryContent, string signature)
         {
-            var signer = ECDsa.Create();
-
-            byte[] signedData = signer.SignHash(binaryContent);
-
-            string signedDataBase64 = Convert.ToBase64String(signedData);
-
-            return $"{signature}.{signedDataBase64}";
+            using ECDsaCng eclipticCurveSignatureAlgorithm = new(CngKey.Import(keyPairs.privateKey, CngKeyBlobFormat.EccPrivateBlob));
+            string signedContent = Convert.ToBase64String(eclipticCurveSignatureAlgorithm.SignHash(binaryContent));
+            return $"{signature}.{signedContent}";
         }
 
-        public static string GetHashSHA256(byte[] binaryContent)
+        public static bool VerifySignature(byte[] hashBytes, string signature, string signerPublicKeyBase64)
+        {
+            byte[] signatureBytes = Convert.FromBase64String(signature);
+            using ECDsaCng eclipticCurveSignatureAlgorithm = new(CngKey.Import(Convert.FromBase64String(signerPublicKeyBase64), CngKeyBlobFormat.EccPublicBlob));
+            return eclipticCurveSignatureAlgorithm.VerifyHash(hashBytes, signatureBytes);
+        }
+
+        public static byte[] GetHashSHA256(byte[] binaryContent)
         {
             using SHA256 mySHA256 = SHA256.Create();
-            byte[] hashedContent = mySHA256.ComputeHash(binaryContent);
-            return Convert.ToBase64String(hashedContent);
+            return mySHA256.ComputeHash(binaryContent);
         }
 
         public static string GetSalt()

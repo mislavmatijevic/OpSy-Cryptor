@@ -23,17 +23,24 @@ namespace OpSy_Cryptor.windows
             {
                 Mouse.OverrideCursor = Cursors.Wait;
 
-                MongoDBConnect mongoDBConnect = new();
-                FoundUsers = await mongoDBConnect.GetUsersFromDBAsync(usersTextBox.Text);
+                FoundUsers = await MongoDBConnect.GetInstance().GetUsersFromDBAsync(usersTextBox.Text);
 
-                if (FoundUsers.Count == 1)
+                if (FoundUsers.Count > 1)
+                {
+                    infoLabel.Content = "Ponuđeni korisnici: ";
+                    foreach (User user in FoundUsers)
+                    {
+                        infoLabel.Content += $"{user.Username} ";
+                    }
+                }
+                else if (FoundUsers.Count == 1)
                 {
                     Tag = FoundUsers[0].PubKey;
                     usersTextBox.Text = FoundUsers[0].Username;
                     infoLabel.Content = "Korisnik pronađen!";
                     infoLabel.Foreground = Brushes.LightGreen;
                 }
-                else if (FoundUsers.Count == 0)
+                else
                 {
                     infoLabel.Content = "Nema pronađenih korisnika!";
                     infoLabel.Foreground = Brushes.Red;

@@ -40,11 +40,9 @@ namespace OpSy_Cryptor
                 passwordTextbox.IsEnabled = false;
                 usernameTextbox.IsEnabled = false;
 
-                MongoDBConnect mongoDBConnect = new();
-
                 try
                 {
-                    UserObject = await mongoDBConnect.LoginUserAsync(username, password);
+                    UserObject = await MongoDBConnect.GetInstance().LoginUserAsync(username, password);
 
                     if (registerWindow is not null)
                     {

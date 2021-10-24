@@ -22,11 +22,13 @@ namespace OpSy_Cryptor.usercontrols
         {
             if (confirmSignatureCheckBox.IsChecked == true)
             {
-                string hashedContentBase64 = EncryptionClass.GetHashSHA256(selectedFile.Contents);
-                string encryptedHashBase64 = EncryptionClass.GetInstance().Sign(Convert.FromBase64String(hashedContentBase64), userID);
+                string hashedContentBase64 = Convert.ToBase64String(selectedFile.SHA256Hash);
+                string signature = EncryptionClass.GetInstance().GetSignature(Convert.FromBase64String(hashedContentBase64), userID);
+
+                signature += $".{DateTime.UtcNow.ToFileTimeUtc()}";
 
                 string newPath = selectedFile.Path + "__potpis.txt";
-                File.WriteAllText(newPath, encryptedHashBase64);
+                File.WriteAllText(newPath, signature);
                 ExplorerNavigator.NavigateWindowsExplorerTo(newPath);
                 signFileButton.Background = Brushes.LightGreen;
                 signFileButton.Foreground = Brushes.Black;
