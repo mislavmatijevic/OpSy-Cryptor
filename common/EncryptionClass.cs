@@ -161,7 +161,7 @@ namespace OpSy_Cryptor.common
                 receiverPublicKeyBytes = Convert.FromBase64String(receiverPublicKeyBase64);
                 receiverPublicKeyImported = CngKey.Import(receiverPublicKeyBytes, CngKeyBlobFormat.EccPublicBlob);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new Exception($"Neispravan ključ!");
             }

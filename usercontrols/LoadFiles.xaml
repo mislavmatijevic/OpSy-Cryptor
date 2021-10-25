@@ -16,7 +16,7 @@
         <TextBlock FontSize="42" FontFamily="Bahnschrift Light" Grid.Row="1" Foreground="#FFEA6270" VerticalAlignment="Top" Margin="1,20,10,0" Height="50" Grid.Column="1" Grid.ColumnSpan="2">Učitaj datoteku</TextBlock>
         <TextBlock FontSize="20" FontFamily="Bahnschrift Light" Grid.Column="1" Grid.Row="1" Foreground="#FFAA2F3C" Margin="11,70,0,0" Height="24" VerticalAlignment="Top" Grid.ColumnSpan="2">Kriptografija će se izvršavati nad ovom datotekom</TextBlock>
 
-        <Button x:Name="loadSignatureButton" Padding="0 -2 0 0" Grid.Column="1" Grid.Row="2" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" Content="Odaberi" Margin="0,9" HorizontalAlignment="Left" FontSize="18" Click="LoadFile_Click" Width="250">
+        <Button x:Name="loadFileButton" Padding="0 -2 0 0" Grid.Column="1" Grid.Row="2" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" Content="Odaberi" Margin="0,9" HorizontalAlignment="Left" FontSize="18" Click="LoadFile_Click" Width="250">
             <Button.Effect>
                 <DropShadowEffect />
             </Button.Effect>

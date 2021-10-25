@@ -1,6 +1,8 @@
-﻿using OpSy_Cryptor.database;
+﻿using Microsoft.Win32;
+using OpSy_Cryptor.database;
 using OpSy_Cryptor.model;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -9,7 +11,8 @@ namespace OpSy_Cryptor.windows
 {
     public partial class ChooseContactDialog : Window
     {
-        public List<User> FoundUsers { get; set; }
+        private List<User> foundUsers;
+        private string chosenPublicKey;
 
         public ChooseContactDialog()
         {
@@ -28,25 +31,29 @@ namespace OpSy_Cryptor.windows
                 {
                     return;
                 }
-                usersTextBox.IsEnabled = false;
-                FoundUsers = await MongoDBConnect.GetInstance().GetUsersFromDBAsync(usersTextBox.Text);
-                usersTextBox.IsEnabled = true;
+                usersTextBox.IsReadOnly = true;
+                foundUsers = await MongoDBConnect.GetInstance().GetUsersFromDBAsync(usersTextBox.Text);
+                usersTextBox.IsReadOnly = false;
+                usersTextBox.Focus();
 
 
-                if (FoundUsers.Count > 1)
+                if (foundUsers.Count > 1)
                 {
                     infoLabel.Content = "Ponuđeni korisnici: ";
-                    foreach (User user in FoundUsers)
+                    foreach (User user in foundUsers)
                     {
                         infoLabel.Content += $"{user.Username} ";
                     }
                 }
-                else if (FoundUsers.Count == 1)
+                else if (foundUsers.Count == 1)
                 {
-                    Tag = FoundUsers[0].PubKey;
-                    usersTextBox.Text = FoundUsers[0].Username;
+                    Tag = foundUsers[0].PubKey;
+                    usersTextBox.Text = foundUsers[0].Username;
                     infoLabel.Content = "Korisnik pronađen!";
                     infoLabel.Foreground = Brushes.LightGreen;
+                    chosenPublicKey = foundUsers[0].PubKey;
+                    e.Handled = true;
+                    acceptButton.Focus();
                 }
                 else
                 {
@@ -57,19 +64,36 @@ namespace OpSy_Cryptor.windows
                 Mouse.OverrideCursor = Cursors.Arrow;
 
             }
+            else
+            {
+                chosenPublicKey = "";
+                infoLabel.Content = "";
+            }
         }
 
         private void AcceptButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Tag is null && string.IsNullOrWhiteSpace(publicKeyTextBox.Text))
+            if (string.IsNullOrWhiteSpace(chosenPublicKey))
             {
                 MessageBox.Show("Unesite javni ključ ili odaberite primatelja!", "Problem pri dekripciji!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (Tag is null)
+            else
             {
-                Tag = publicKeyTextBox.Text;
+                Tag = chosenPublicKey;
+                Close();
             }
-            Close();
+        }
+
+        private void LoadPublicKeyFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new();
+            openFileDialog.Title = "Odabir datoteke s javnim ključem druge strane";
+            openFileDialog.ShowDialog();
+            if (!string.IsNullOrWhiteSpace(openFileDialog.FileName) && openFileDialog.CheckPathExists)
+            {
+                string path = openFileDialog.FileName;
+                chosenPublicKey = File.ReadAllText(path);
+            }
         }
     }
 }

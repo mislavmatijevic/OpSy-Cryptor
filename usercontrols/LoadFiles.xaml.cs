@@ -20,6 +20,7 @@ namespace OpSy_Cryptor.usercontrols
         private void LoadFile_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new();
+            openFileDialog.Title = "Odabir datoteke nad kojom će se izvršavati operacije";
             openFileDialog.ShowDialog();
             if (!string.IsNullOrWhiteSpace(openFileDialog.FileName) && openFileDialog.CheckPathExists)
             {

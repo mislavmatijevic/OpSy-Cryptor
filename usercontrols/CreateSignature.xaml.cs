@@ -25,8 +25,6 @@ namespace OpSy_Cryptor.usercontrols
                 string hashedContentBase64 = Convert.ToBase64String(selectedFile.SHA256Hash);
                 string signature = EncryptionClass.GetInstance().GetSignature(Convert.FromBase64String(hashedContentBase64), userID);
 
-                signature += $".{DateTime.UtcNow.ToFileTimeUtc()}";
-
                 string newPath = selectedFile.Path + "__potpis.txt";
                 File.WriteAllText(newPath, signature);
                 ExplorerNavigator.NavigateWindowsExplorerTo(newPath);

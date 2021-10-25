@@ -2,9 +2,7 @@
 using OpSy_Cryptor.common;
 using OpSy_Cryptor.database;
 using OpSy_Cryptor.model;
-using System;
 using System.IO;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -51,6 +49,7 @@ namespace OpSy_Cryptor.usercontrols
         private async void LoadSignatureButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new();
+            openFileDialog.Title = "Odabir datoteke s potpisom";
             openFileDialog.ShowDialog();
             if (!string.IsNullOrWhiteSpace(openFileDialog.FileName) && openFileDialog.CheckPathExists)
             {
@@ -60,7 +59,6 @@ namespace OpSy_Cryptor.usercontrols
                 {
                     string userId = contents.Split('.')[0];
                     string signature = contents.Split('.')[1];
-                    long timestamp = long.Parse(contents.Split('.')[2]);
 
                     DisplayMessage($"Provjera potpisa...", MessageState.Info);
                     User presumedSigner = await MongoDBConnect.GetInstance().GetUserByIdAsync(userId);
@@ -69,7 +67,7 @@ namespace OpSy_Cryptor.usercontrols
 
                     if (isVerified)
                     {
-                        DisplayMessage($"Korisnik {presumedSigner.Username} ovim je programom digitalno potpisao datoteku {selectedFile.Name} dana {DateTime.FromFileTimeUtc(timestamp).Day}. {DateTime.FromFileTimeUtc(timestamp).Month}. {DateTime.FromFileTimeUtc(timestamp).Year}. u {DateTime.FromFileTimeUtc(timestamp).Hour}:{DateTime.FromFileTimeUtc(timestamp).Minute}!", MessageState.Success);
+                        DisplayMessage($"Korisnik {presumedSigner.Username} ovim je programom digitalno potpisao datoteku {selectedFile.Name}!", MessageState.Success);
                     }
                     else
                     {

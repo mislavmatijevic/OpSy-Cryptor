@@ -19,28 +19,27 @@ namespace OpSy_Cryptor.usercontrols
             decryptButton.Content = $"Dekriptiraj {selectedFile.Name}";
         }
 
-        private string ChooseSecretKey()
+        private static string ChooseSecretKey()
         {
-            if (useLocalSecretKey.IsChecked == false)
+            OpenFileDialog openFileDialog = new();
+            openFileDialog.Title = "Odabir datoteke s tajnim ključem";
+            openFileDialog.ShowDialog();
+            if (!string.IsNullOrWhiteSpace(openFileDialog.FileName) && openFileDialog.CheckPathExists)
             {
-                OpenFileDialog openFileDialog = new();
-                openFileDialog.ShowDialog();
-                if (!string.IsNullOrWhiteSpace(openFileDialog.FileName) && openFileDialog.CheckPathExists)
-                {
-                    string path = openFileDialog.FileName;
-                    return File.ReadAllText(path);
-                }
-                else
-                {
-                    useLocalSecretKey.IsChecked = false;
-                }
+                string path = openFileDialog.FileName;
+                return File.ReadAllText(path);
             }
-            return EncryptionClass.GetInstance().GetSecretKey;
+            return null;
         }
 
         private async void CryptButton_Click(object sender, RoutedEventArgs e)
         {
             string secretKey = ChooseSecretKey();
+            if (secretKey is null)
+            {
+                return;
+            }
+
             try
             {
                 string encryptedFile = EncryptionClass.GetInstance().EncryptSymmetricAES(selectedFile.Contents, secretKey);
