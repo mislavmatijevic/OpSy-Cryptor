@@ -34,7 +34,7 @@
         <Label Padding="5 10 0 0" Grid.Column="2" Grid.Row="6" FontFamily="Bahnschrift Light" Height="40" VerticalAlignment="Center" Margin="10,0,10,0" FontSize="24" Foreground="White">Ponovi lozinku:</Label>
         <PasswordBox x:Name="password2TextBox" Padding="1" Grid.Column="2" Grid.Row="7" Margin="10,0,10,0" Background="White" Foreground="#FF970000" UseLayoutRounding="True" BorderBrush="Black" Height="30" VerticalAlignment="Center" FontSize="20" />
 
-        <Button x:Name="registerNowButton" Padding="0 -2 0 0" Grid.Column="2" Grid.Row="8" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" Content="Registriraj me" Margin="10,10,10,10" FontSize="15" Click="RegisterButton_Click">
+        <Button x:Name="registerNowButton" Padding="0 -2 0 0" Grid.Column="2" Grid.Row="8" BorderBrush="Black" Content="Registriraj me" Margin="10,10,10,10" FontSize="15" Click="RegisterButton_Click" Style="{StaticResource CryptorButton}">
             <Button.Effect>
                 <DropShadowEffect />
             </Button.Effect>

@@ -47,7 +47,6 @@ namespace OpSy_Cryptor.windows
                 }
                 else if (foundUsers.Count == 1)
                 {
-                    Tag = foundUsers[0].PubKey;
                     usersTextBox.Text = foundUsers[0].Username;
                     infoLabel.Content = "Korisnik pronađen!";
                     infoLabel.Foreground = Brushes.LightGreen;

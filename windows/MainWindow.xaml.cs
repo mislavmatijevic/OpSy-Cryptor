@@ -44,14 +44,12 @@ namespace OpSy_Cryptor
             try
             {
                 EncryptionClass.GetInstance().LoadPrivateKeyECDH(ReadKeyFromFile("privatni_kljuc.txt"));
-                EncryptionClass.GetInstance().LoadSecretKeyAES(ReadKeyFromFile("tajni_kljuc.txt"));
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Problem pri čitanju datoteke!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "Problem pri pronalaženju privatnog ključa!", MessageBoxButton.OK, MessageBoxImage.Error);
                 Environment.Exit(0);
             }
-
         }
 
         private void NavMenu_ChangeStateEvent(Option option)

@@ -32,7 +32,7 @@
         <Label Padding="5 10 0 0" Grid.Column="2" Grid.Row="4" FontFamily="Bahnschrift Light" Height="40" VerticalAlignment="Center" Margin="10,0,10,0" FontSize="24" Foreground="White">Lozinka:</Label>
         <PasswordBox x:Name="passwordTextbox" Padding="1" Grid.Column="2" Grid.Row="5" Margin="10,10,10,0" Background="#FFF3E2E4" Foreground="#FF970000" UseLayoutRounding="True" BorderBrush="Black" Height="30" VerticalAlignment="Top" FontSize="20" />
 
-        <Button x:Name="loginButton" Content="Prijava" Padding="0 0 0 0" Grid.Column="2" Grid.Row="7" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" Margin="50,10,50,10" FontSize="20" Click="LoginButton_Click" FontFamily="Bahnschrift Light">
+        <Button x:Name="loginButton" Content="Prijava" Padding="0 0 0 0" Grid.Column="2" Grid.Row="7" BorderBrush="Black" Margin="50,10,50,10" FontSize="20" Click="LoginButton_Click" FontFamily="Bahnschrift Light" Style="{StaticResource CryptorButton}">
             <Button.Effect>
                 <DropShadowEffect />
             </Button.Effect>

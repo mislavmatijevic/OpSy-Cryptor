@@ -63,12 +63,6 @@ namespace OpSy_Cryptor.common
             }
         }
 
-        public void LoadSecretKeyAES(string secretKeyBase64)
-        {
-            aesObject.Key = Convert.FromBase64String(secretKeyBase64);
-            keyPairs.secretKey = aesObject.Key;
-        }
-
         public void LoadPrivateKeyECDH(string privateKeyBase64)
         {
             keyPairs.privateKey = Convert.FromBase64String(privateKeyBase64);
@@ -119,9 +113,9 @@ namespace OpSy_Cryptor.common
             {
                 aesObject.Key = Convert.FromBase64String(secretKeyBase64);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new Exception($"Ključ nije ispravan za AES!\nProvjerite još jednom javni ključ primatelja:\n\n{e}");
+                throw new Exception($"Ključ nije ispravan za AES!\nProvjerite još jednom javni ključ primatelja.");
             }
             aesObject.IV = initializationVector;
 
@@ -137,9 +131,9 @@ namespace OpSy_Cryptor.common
                 }
                 cryptedContentBytes = cryptedContentStream.ToArray();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new Exception($"Problem pri kriptiranju poruke:\n\n{e}");
+                throw new Exception($"Problem pri kriptiranju poruke.");
             }
 
             string encryptedContents = Convert.ToBase64String(cryptedContentBytes).Trim();
@@ -216,9 +210,9 @@ namespace OpSy_Cryptor.common
             {
                 aesObject.IV = Convert.FromBase64String(initializationVectorBase64);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new Exception($"Inicijalizacijski vektor nije ispravan!\nProvjerite još jednom IV od pošiljatelja!\n\n{e}");
+                throw new Exception($"Inicijalizacijski vektor nije ispravan!\nProvjerite još jednom IV od pošiljatelja!");
             }
 
             byte[] readableContent;
@@ -234,9 +228,9 @@ namespace OpSy_Cryptor.common
 
                 readableContent = decryptedContent.ToArray();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new Exception($"Problem pri dekriptiranju poruke:\n\n{e}");
+                throw new Exception($"Problem pri dekriptiranju poruke.");
             }
 
             return readableContent;
@@ -261,9 +255,9 @@ namespace OpSy_Cryptor.common
                 senderPublicKeyBytes = Convert.FromBase64String(senderPublicKeyBase64);
                 senderPublicKeyImport = CngKey.Import(senderPublicKeyBytes, CngKeyBlobFormat.EccPublicBlob);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new Exception($"Primateljev javni ključ nije ispravan:\n\n{e}");
+                throw new Exception($"Primateljev javni ključ nije ispravan.");
             }
 
             // Ključ za simetrični AES dobiva se derivacijom javnog ključa pošiljatelja i privatnog ključa korisnika.

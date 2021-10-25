@@ -17,7 +17,7 @@
         <TextBlock FontSize="42" FontFamily="Bahnschrift Light" Grid.Row="1" Foreground="#FFEA6270" VerticalAlignment="Top" Margin="1,20,10,0" Height="50" Grid.Column="1" Grid.ColumnSpan="2">Potvrda potpisa</TextBlock>
         <TextBlock FontSize="20" FontFamily="Bahnschrift Light" Grid.Column="1" Grid.Row="1" Foreground="#FFAA2F3C" Margin="11,70,0,0" Height="24" VerticalAlignment="Top">Čitanje i provjera digitalnog potpisa učitane datoteke</TextBlock>
 
-        <Button x:Name="loadSignatureButton" Padding="0 -2 0 0" Grid.Column="1" Grid.Row="2" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" Content="Učitaj datoteku potpisa" Margin="0,9" HorizontalAlignment="Left"  FontSize="18" Click="LoadSignatureButton_Click" Width="250">
+        <Button x:Name="loadSignatureButton"  Grid.Column="1" Grid.Row="2" BorderBrush="Black" Content="Učitaj datoteku potpisa" Margin="0,9" HorizontalAlignment="Center" FontSize="18" Click="LoadSignatureButton_Click" Width="250" Style="{StaticResource CryptorButton}">
             <Button.Effect>
                 <DropShadowEffect />
             </Button.Effect>

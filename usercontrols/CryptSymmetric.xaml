@@ -6,24 +6,24 @@
             <ColumnDefinition Width="40" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="200" />
             <RowDefinition Height="60" />
             <RowDefinition Height="60" />
-            <RowDefinition Height="0*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
         <TextBlock FontSize="42" FontFamily="Bahnschrift Light" Grid.Row="1" Foreground="#FFEA6270" VerticalAlignment="Top" Margin="1,20,10,0" Height="50" Grid.Column="1">Simetrična kriptografija</TextBlock>
         <TextBlock FontSize="20" FontFamily="Bahnschrift Light" Grid.Column="1" Grid.Row="1" Foreground="#FFAA2F3C" Margin="11,70,0,0" Height="24" VerticalAlignment="Top">Advanced Encryption Standard (AES)</TextBlock>
 
-        <Button x:Name="cryptButton" Padding="0 -2 0 0" Grid.Column="1" HorizontalAlignment="Center" Width="200" Grid.Row="2" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" Content="Kriptiraj datoteku xy.txt" Margin="10,10,10,10" FontSize="15" Click="CryptButton_Click" MaxWidth="200">
+        <Button x:Name="cryptButton" Padding="0 -2 0 0" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" BorderBrush="Black" Content="Kriptiraj datoteku xy.txt" Margin="10,10,10,10" FontSize="15" Click="CryptButton_Click" Width="400" MaxWidth="500" Style="{StaticResource CryptorButton}">
             <Button.Effect>
                 <DropShadowEffect />
             </Button.Effect>
         </Button>
 
-        <Button x:Name="decryptButton" Padding="0 -2 0 0" Grid.Column="1" HorizontalAlignment="Center" Width="200" Grid.Row="3" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" Content="Dekriptiraj datoteku xy.txt" Margin="10,10,10,10" FontSize="15" Click="DecryptButton_Click" MaxWidth="200">
+        <Button x:Name="decryptButton" Padding="0 -2 0 0" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="3" BorderBrush="Black" Content="Dekriptiraj datoteku xy.txt" Margin="10,10,10,10" FontSize="15" Click="DecryptButton_Click" Width="400" MaxWidth="500" Style="{StaticResource CryptorButton}">
             <Button.Effect>
                 <DropShadowEffect />
             </Button.Effect>

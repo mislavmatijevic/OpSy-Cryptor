@@ -6,12 +6,24 @@
     <RootNamespace>OpSy_Cryptor</RootNamespace>
     <UseWPF>true</UseWPF>
     <StartupObject>OpSy_Cryptor.App</StartupObject>
+    <ApplicationIcon>logoSmall.ico</ApplicationIcon>
+    <Authors>Mislav Matijević</Authors>
+    <Description>Projekt iz kolegija Operacijski sustavi 2.
+20.-25. listopada 2021.</Description>
+    <Copyright>Mislav Matijević</Copyright>
+    <PackageIcon>logoSmall.png</PackageIcon>
+    <PackageIconUrl />
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="resources/back.png" />
     <None Remove="resources/logoBig.png" />
     <None Remove="resources/logoSmall.png" />
+    <None Include="resources\logoSmall.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

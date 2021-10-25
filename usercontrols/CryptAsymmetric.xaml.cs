@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace OpSy_Cryptor.usercontrols
 {
@@ -34,6 +35,9 @@ namespace OpSy_Cryptor.usercontrols
 
                     await File.WriteAllTextAsync(path, encryptedFile);
                     ExplorerNavigator.NavigateWindowsExplorerTo(path);
+                    cryptButton.Background = Brushes.LightGreen;
+                    cryptButton.Foreground = Brushes.Black;
+                    cryptButton.Content = "Datoteka je kriptirana!";
                 }
                 catch (Exception ex)
                 {
@@ -68,6 +72,9 @@ namespace OpSy_Cryptor.usercontrols
 
                     await File.WriteAllBytesAsync(path, decryptedFile);
                     ExplorerNavigator.NavigateWindowsExplorerTo(path);
+                    decryptButton.Background = Brushes.LightGreen;
+                    decryptButton.Foreground = Brushes.Black;
+                    decryptButton.Content = "Datoteka je dekriptirana!";
                 }
                 catch (Exception ex)
                 {

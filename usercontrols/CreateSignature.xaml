@@ -19,10 +19,7 @@
 
         <CheckBox x:Name="confirmSignatureCheckBox" Content="Potvruđujem svoj potpis odabrane datoteke" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20 0 0 0" Grid.Column="1" Grid.Row="2" FontFamily="Bahnschrift Light" FontSize="15" Foreground="White" />
 
-        <Button x:Name="signFileButton" Padding="0 -2 0 0" Grid.Column="1" Grid.Row="3" BorderBrush="Black" Background="#FF641A22" Foreground="White" Content="Potpiši datoteku" Margin="10,10,10,10" FontSize="15" Click="SignFileButton_Click" MaxWidth="500">
-            <Button.Effect>
-                <DropShadowEffect />
-            </Button.Effect>
+        <Button x:Name="signFileButton" IsEnabled="{Binding ElementName=confirmSignatureCheckBox, Path=IsChecked}" Padding="0 -2 0 0" Grid.Column="1" Grid.Row="3" BorderBrush="Black" Content="Potpiši datoteku" Margin="10,10,10,10" Click="SignFileButton_Click" MaxWidth="500" Style="{StaticResource CryptorButton}">
         </Button>
     </Grid>
 
