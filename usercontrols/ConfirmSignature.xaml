@@ -1,28 +1,29 @@
-﻿<UserControl x:Class="OpSy_Cryptor.usercontrols.ConfirmSignature" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:OpSy_Cryptor.usercontrols" mc:Ignorable="d">
+﻿<UserControl x:Class="OpSy_Cryptor.usercontrols.ConfirmSignature" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:OpSy_Cryptor.usercontrols" mc:Ignorable="d" MaxWidth="600" MaxHeight="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="40" />
+            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="40" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20" />
-            <RowDefinition Height="150" />
-            <RowDefinition Height="50" />
-            <RowDefinition />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="44.77" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="200" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
-        <TextBlock FontSize="42" FontFamily="Bahnschrift Light" Grid.Row="1" Foreground="#FFEA6270" VerticalAlignment="Top" Margin="10,20,10,0" Height="50">Potvrda potpisa</TextBlock>
-        <TextBlock FontSize="20" FontFamily="Bahnschrift Light" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Foreground="#FFAA2F3C" Margin="20,70,0,0" Height="24" VerticalAlignment="Top">Čitanje i provjera digitalnog potpisa učitane datoteke</TextBlock>
+        <TextBlock FontSize="42" FontFamily="Bahnschrift Light" Grid.Row="1" Foreground="#FFEA6270" VerticalAlignment="Top" Margin="1,20,10,0" Height="50" Grid.Column="1" Grid.ColumnSpan="2">Potvrda potpisa</TextBlock>
+        <TextBlock FontSize="20" FontFamily="Bahnschrift Light" Grid.Column="1" Grid.Row="1" Foreground="#FFAA2F3C" Margin="11,70,0,0" Height="24" VerticalAlignment="Top" Grid.ColumnSpan="2">Čitanje i provjera digitalnog potpisa učitane datoteke</TextBlock>
 
-        <Button x:Name="loadSignatureButton" Padding="0 -2 0 0" Grid.Column="1" Grid.Row="2" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" Content="Učitaj datoteku potpisa" Margin="10,9,10,9" FontSize="18" Click="LoadSignatureButton_Click" MaxWidth="200">
+        <Button x:Name="loadSignatureButton" Padding="0 -2 0 0" Grid.Column="1" Grid.Row="2" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" Content="Učitaj datoteku potpisa" Margin="0,9" HorizontalAlignment="Left"  FontSize="18" Click="LoadSignatureButton_Click" Width="250">
             <Button.Effect>
                 <DropShadowEffect />
             </Button.Effect>
         </Button>
 
-        <Label x:Name="messageLabel" Padding="5 10 0 0" Grid.Row="4" FontFamily="Bahnschrift Light" FontSize="18" Foreground="White" Content="Pronađen korisnik Ivo Ivić!" Margin="10,5,0,6" />
+        <TextBlock x:Name="messageTextBlock" Padding="5 10 0 0" Grid.Row="4" FontFamily="Bahnschrift Light" FontSize="18" Foreground="White" Margin="1,5,0,6" Grid.Column="1" Grid.ColumnSpan="2" TextWrapping="Wrap">abc</TextBlock>
     </Grid>
 
 </UserControl>

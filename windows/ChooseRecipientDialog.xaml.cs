@@ -23,7 +23,15 @@ namespace OpSy_Cryptor.windows
             {
                 Mouse.OverrideCursor = Cursors.Wait;
 
+                infoLabel.Content = "";
+                if (string.IsNullOrWhiteSpace(usersTextBox.Text))
+                {
+                    return;
+                }
+                usersTextBox.IsEnabled = false;
                 FoundUsers = await MongoDBConnect.GetInstance().GetUsersFromDBAsync(usersTextBox.Text);
+                usersTextBox.IsEnabled = true;
+
 
                 if (FoundUsers.Count > 1)
                 {

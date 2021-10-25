@@ -6,21 +6,21 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30*" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="50" />
-            <RowDefinition Height="20*" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="50*" />
+            <RowDefinition Height="49*" MaxHeight="65" />
             <RowDefinition Height="43*" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="49*" MaxHeight="65" />
             <RowDefinition Height="43*" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="49*" MaxHeight="65" />
             <RowDefinition Height="43*" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="49*" MaxHeight="65" />
             <RowDefinition Height="43*" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="30*" />
+            <RowDefinition Height="49*" MaxHeight="65" />
+            <RowDefinition Height="30" />
         </Grid.RowDefinitions>
-        <Image Grid.Row="1" Stretch="Fill" Source="/resources/back.png" Grid.Column="1" RenderTransformOrigin="0.5,0.5">
+        <Image Grid.Row="1" Stretch="Uniform" Source="/resources/back.png" Grid.Column="1" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform />
@@ -31,7 +31,7 @@
             </Image.RenderTransform>
         </Image>
         <TextBlock Margin="57,0,0,0" Grid.Row="1" TextWrapping="Wrap" Height="24" VerticalAlignment="Center" Foreground="Red" FontSize="18" HorizontalAlignment="Left" Width="543" Grid.Column="2"><Run Language="hr-hr" Text="Započnite učitavanjem datoteke u sustav!" /></TextBlock>
-        <Image Grid.Row="3" Stretch="Fill" Source="/resources/back.png" Grid.Column="1" RenderTransformOrigin="0.5,0.5">
+        <Image Grid.Row="3" Stretch="Uniform" Source="/resources/back.png" Grid.Column="1" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform />
@@ -42,7 +42,7 @@
             </Image.RenderTransform>
         </Image>
         <TextBlock Margin="57,0,0,0" Grid.Row="3" TextWrapping="Wrap" Height="24" VerticalAlignment="Center" Foreground="Red" FontSize="18" Grid.Column="2"><Run Language="hr-hr" Text="Kriptirajte datoteku svojim tajnim ključem AES enkripcijom!" /></TextBlock>
-        <Image Grid.Row="5" Stretch="Fill" Source="/resources/back.png" Grid.Column="1" RenderTransformOrigin="0.5,0.5">
+        <Image Grid.Row="5" Stretch="Uniform" Source="/resources/back.png" Grid.Column="1" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform />
@@ -53,7 +53,7 @@
             </Image.RenderTransform>
         </Image>
         <TextBlock Margin="57,0,0,0" Grid.Row="5" TextWrapping="Wrap" Height="24" VerticalAlignment="Center" Foreground="Red" FontSize="18" Grid.Column="2"><Run Language="hr-hr" Text="Kriptirajte datoteku RSA sustavom, koristeći nečiji javni ključ!" /></TextBlock>
-        <Image Grid.Row="7" Stretch="Fill" Source="/resources/back.png" Grid.Column="1" RenderTransformOrigin="0.5,0.5">
+        <Image Grid.Row="7" Stretch="Uniform" Source="/resources/back.png" Grid.Column="1" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform />
@@ -64,23 +64,23 @@
             </Image.RenderTransform>
         </Image>
         <TextBlock Margin="57,0,0,0" Grid.Row="7" TextWrapping="Wrap" Height="24" VerticalAlignment="Center" Foreground="Red" FontSize="18" Grid.Column="2"><Run Language="hr-hr" Text="Izračunajte SHA-256 sažetak datoteke!" /></TextBlock>
-        <Image Grid.Row="9" Stretch="Fill" Source="/resources/back.png" Grid.Column="1" RenderTransformOrigin="0.5,0.5">
+        <Image Grid.Row="9" Stretch="Uniform" Source="/resources/back.png" Grid.Column="1" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform />
                     <SkewTransform />
-                    <RotateTransform Angle="-7.884" />
+                    <RotateTransform Angle="-8" />
                     <TranslateTransform />
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
         <TextBlock Margin="57,0,0,0" Grid.Row="9" TextWrapping="Wrap" Height="24" VerticalAlignment="Center" Foreground="Red" FontSize="18" Grid.Column="2"><Run Language="hr-hr" Text="Digitalno potpišite datoteku!" /></TextBlock>
-        <Image Grid.Row="11" Stretch="Fill" Source="/resources/back.png" Grid.Column="1" RenderTransformOrigin="0.5,0.5">
+        <Image Grid.Row="11" Stretch="Uniform" Source="/resources/back.png" Grid.Column="1" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform />
                     <SkewTransform />
-                    <RotateTransform Angle="-12.002" />
+                    <RotateTransform Angle="-13" />
                     <TranslateTransform />
                 </TransformGroup>
             </Image.RenderTransform>

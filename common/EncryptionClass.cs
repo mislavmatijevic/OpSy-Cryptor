@@ -163,7 +163,7 @@ namespace OpSy_Cryptor.common
             }
             catch (Exception e)
             {
-                throw new Exception($"Ovaj primatelj nema ispravan ključ:\n\n{e}");
+                throw new Exception($"Neispravan ključ!");
             }
 
             // Secret AES key is derived from public key of sender and private key of the user preforming the action.

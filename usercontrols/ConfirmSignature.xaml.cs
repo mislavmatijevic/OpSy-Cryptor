@@ -19,7 +19,7 @@ namespace OpSy_Cryptor.usercontrols
         {
             selectedFile = _selectedFile;
             InitializeComponent();
-            messageLabel.Content = "";
+            messageTextBlock.Text = "";
         }
 
         private enum MessageState
@@ -34,18 +34,18 @@ namespace OpSy_Cryptor.usercontrols
             switch (messageState)
             {
                 case MessageState.Error:
-                    messageLabel.Foreground = Brushes.Red;
+                    messageTextBlock.Foreground = Brushes.Red;
                     break;
                 case MessageState.Success:
-                    messageLabel.Foreground = Brushes.LightGreen;
+                    messageTextBlock.Foreground = Brushes.LightGreen;
                     break;
                 case MessageState.Info:
-                    messageLabel.Foreground = Brushes.White;
+                    messageTextBlock.Foreground = Brushes.White;
                     break;
                 default:
                     break;
             }
-            messageLabel.Content = message;
+            messageTextBlock.Text = message;
         }
 
         private async void LoadSignatureButton_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -69,11 +69,11 @@ namespace OpSy_Cryptor.usercontrols
 
                     if (isVerified)
                     {
-                        DisplayMessage($"Korisnik {presumedSigner.Username} digitalno je potpisao ovu datoteku {DateTime.FromFileTimeUtc(timestamp).Day}. {DateTime.FromFileTimeUtc(timestamp).Month}. {DateTime.FromFileTimeUtc(timestamp).Year}. u {DateTime.FromFileTimeUtc(timestamp).Hour}:{DateTime.FromFileTimeUtc(timestamp).Minute}!", MessageState.Success);
+                        DisplayMessage($"Korisnik {presumedSigner.Username} ovim je programom digitalno potpisao datoteku {selectedFile.Name} dana {DateTime.FromFileTimeUtc(timestamp).Day}. {DateTime.FromFileTimeUtc(timestamp).Month}. {DateTime.FromFileTimeUtc(timestamp).Year}. u {DateTime.FromFileTimeUtc(timestamp).Hour}:{DateTime.FromFileTimeUtc(timestamp).Minute}!", MessageState.Success);
                     }
                     else
                     {
-                        DisplayMessage($"Potpis je krivotvoren!", MessageState.Error);
+                        DisplayMessage($"Potpis je krivotvoren, lažno je potpisan korisnik {presumedSigner.Username}!", MessageState.Error);
                     }
                 }
                 catch

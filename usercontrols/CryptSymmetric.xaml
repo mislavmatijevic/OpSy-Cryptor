@@ -1,35 +1,35 @@
-﻿<UserControl x:Class="OpSy_Cryptor.usercontrols.CryptSymmetric" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:OpSy_Cryptor.usercontrols" mc:Ignorable="d">
+﻿<UserControl x:Class="OpSy_Cryptor.usercontrols.CryptSymmetric" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:OpSy_Cryptor.usercontrols" mc:Ignorable="d" MaxWidth="600" MaxHeight="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="40" />
+            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="40" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="100" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="25" />
+            <RowDefinition Height="200" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="60" />
             <RowDefinition Height="*" />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
-        <TextBlock FontSize="42" FontFamily="Bahnschrift Light" Grid.Row="1" Grid.ColumnSpan="3" Foreground="#FFEA6270" VerticalAlignment="Top" Margin="10,0,10,0">Simetrična kriptografija</TextBlock>
-        <TextBlock FontSize="20" FontFamily="Bahnschrift Light" Grid.Row="1" Grid.ColumnSpan="3" Foreground="#FFAA2F3C" Margin="20,60,10,20" Height="24" VerticalAlignment="Top">Advanced Encryption Standard (AES)</TextBlock>
+        <TextBlock FontSize="42" FontFamily="Bahnschrift Light" Grid.Row="1" Foreground="#FFEA6270" VerticalAlignment="Top" Margin="1,20,10,0" Height="50" Grid.Column="1">Simetrična kriptografija</TextBlock>
+        <TextBlock FontSize="20" FontFamily="Bahnschrift Light" Grid.Column="1" Grid.Row="1" Foreground="#FFAA2F3C" Margin="11,70,0,0" Height="24" VerticalAlignment="Top">Advanced Encryption Standard (AES)</TextBlock>
 
-        <Button x:Name="cryptButton" Padding="0 -2 0 0" Grid.Column="0" Grid.Row="2" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" Content="Kriptiraj datoteku xy.txt" Margin="10,10,10,10" FontSize="15" Click="CryptButton_Click" MaxWidth="200">
+        <Button x:Name="cryptButton" Padding="0 -2 0 0" Grid.Column="1" HorizontalAlignment="Center" Width="200" Grid.Row="2" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" Content="Kriptiraj datoteku xy.txt" Margin="10,10,10,10" FontSize="15" Click="CryptButton_Click" MaxWidth="200">
             <Button.Effect>
                 <DropShadowEffect />
             </Button.Effect>
         </Button>
 
-        <Button x:Name="decryptButton" Padding="0 -2 0 0" Grid.Column="0" Grid.Row="3" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" Content="Dekriptiraj datoteku xy.txt" Margin="10,10,10,10" FontSize="15" Click="DecryptButton_Click" MaxWidth="200">
+        <Button x:Name="decryptButton" Padding="0 -2 0 0" Grid.Column="1" HorizontalAlignment="Center" Width="200" Grid.Row="3" BorderBrush="Black" Background="#FFAA2F3C" Foreground="White" Content="Dekriptiraj datoteku xy.txt" Margin="10,10,10,10" FontSize="15" Click="DecryptButton_Click" MaxWidth="200">
             <Button.Effect>
                 <DropShadowEffect />
             </Button.Effect>
         </Button>
 
-        <CheckBox x:Name="useLocalSecretKey" Grid.Row="5" VerticalAlignment="Top" Content="Koristi ključ iz direktorija s ključevima?" IsChecked="True" Margin="30,0,0,0" Foreground="#EEF58D96" />
+        <CheckBox x:Name="useLocalSecretKey" Grid.Row="5" Grid.Column="1" FontSize="20" VerticalAlignment="Top" Padding="15, -7" Content="Koristi ključ iz direktorija s ključevima" IsChecked="True" Margin="30,0,0,0" Foreground="#EEF58D96" />
     </Grid>
 </UserControl>
