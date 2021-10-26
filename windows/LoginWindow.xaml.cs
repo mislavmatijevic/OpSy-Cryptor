@@ -61,7 +61,7 @@ namespace OpSy_Cryptor
                     Mouse.OverrideCursor = Cursors.Arrow;
                     passwordTextbox.IsEnabled = true;
                     usernameTextbox.IsEnabled = true;
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message, "Neuspjeh pri povezivanju na MongoDB bazu", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
             }

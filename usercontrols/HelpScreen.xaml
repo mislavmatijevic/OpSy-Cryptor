@@ -30,7 +30,7 @@
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-        <TextBlock Margin="57,0,0,0" Grid.Row="1" TextWrapping="Wrap" Height="24" VerticalAlignment="Center" Foreground="Red" FontSize="18" HorizontalAlignment="Left" Width="543" Grid.Column="2"><Run Language="hr-hr" Text="Započnite učitavanjem datoteke u sustav!" /></TextBlock>
+        <TextBlock Margin="57,0,0,0" Grid.Row="1" TextWrapping="Wrap" Height="24" VerticalAlignment="Center" Foreground="Red" FontSize="18" HorizontalAlignment="Left" Width="543" Grid.Column="2"><Run Language="hr-hr" Text="Započnite učitavanjem datoteke!" /></TextBlock>
         <Image Grid.Row="3" Stretch="Uniform" Source="/resources/back.png" Grid.Column="1" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
@@ -41,7 +41,7 @@
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-        <TextBlock Margin="57,0,0,0" Grid.Row="3" TextWrapping="Wrap" Height="24" VerticalAlignment="Center" Foreground="Red" FontSize="18" Grid.Column="2"><Run Language="hr-hr" Text="Kriptirajte datoteku svojim tajnim ključem AES enkripcijom!" /></TextBlock>
+        <TextBlock Margin="57,0,0,0" Grid.Row="3" TextWrapping="Wrap" Height="24" VerticalAlignment="Center" Foreground="Red" FontSize="18" Grid.Column="2"><Run Language="hr-hr" Text="Kriptirajte datoteku svojim tajnim ključem!" /></TextBlock>
         <Image Grid.Row="5" Stretch="Uniform" Source="/resources/back.png" Grid.Column="1" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
@@ -52,7 +52,7 @@
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-        <TextBlock Margin="57,0,0,0" Grid.Row="5" TextWrapping="Wrap" Height="24" VerticalAlignment="Center" Foreground="Red" FontSize="18" Grid.Column="2"><Run Language="hr-hr" Text="Kriptirajte datoteku RSA sustavom, koristeći nečiji javni ključ!" /></TextBlock>
+        <TextBlock Margin="57,0,0,0" Grid.Row="5" TextWrapping="Wrap" Height="24" VerticalAlignment="Center" Foreground="Red" FontSize="18" Grid.Column="2"><Run Language="hr-hr" Text="Kriptirajte datoteku za točno određenog korisnika!" /></TextBlock>
         <Image Grid.Row="7" Stretch="Uniform" Source="/resources/back.png" Grid.Column="1" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
