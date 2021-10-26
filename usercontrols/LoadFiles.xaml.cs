@@ -9,8 +9,11 @@ namespace OpSy_Cryptor.usercontrols
 {
     public partial class LoadFiles : UserControl
     {
+        private SelectedFile selectedFile;
+
         public LoadFiles()
         {
+            DataContext = this;
             InitializeComponent();
         }
 
@@ -27,10 +30,15 @@ namespace OpSy_Cryptor.usercontrols
                 string path = openFileDialog.FileName;
                 byte[] contents = File.ReadAllBytes(path);
 
-                OnFileSelectedEvent(new SelectedFile(path, contents));
+                selectedFile = new SelectedFile(path, contents);
+                OnFileSelectedEvent(selectedFile);
                 loadFileButton.Content = $"Odabrana datoteka {openFileDialog.SafeFileName}!";
+
                 loadFileButton.Background = Brushes.LightGreen;
                 loadFileButton.Foreground = Brushes.Black;
+                contentTextBlock.Visibility = Visibility.Visible;
+                contentTextBox.Visibility = Visibility.Visible;
+                contentTextBox.Text = selectedFile.Name[(selectedFile.Name.Length-3)..] == "txt" ? System.Text.Encoding.UTF8.GetString(selectedFile.Contents) : "Ova datoteka nije tekstualna!";
             }
         }
     }

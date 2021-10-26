@@ -92,6 +92,9 @@ namespace OpSy_Cryptor.windows
             {
                 string path = openFileDialog.FileName;
                 chosenPublicKey = File.ReadAllText(path);
+                loadPublicKeyFileButton.Foreground = Brushes.Black;
+                loadPublicKeyFileButton.Background = Brushes.LightGreen;
+                loadPublicKeyFileButton.Content = "Odabrana datoteka s javnim ključem!";
             }
         }
     }

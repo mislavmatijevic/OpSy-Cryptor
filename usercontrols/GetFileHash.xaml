@@ -24,10 +24,10 @@
         <TextBlock FontSize="20" FontFamily="Bahnschrift Light" Grid.Column="1" Grid.Row="1" Foreground="#FFAA2F3C" Margin="11,70,0,0" Height="24" VerticalAlignment="Top" Grid.ColumnSpan="2">SHA256</TextBlock>
 
         <Label Padding="5 10 0 0" Grid.Row="2" Grid.Column="1" FontFamily="Bahnschrift Light" Height="40" VerticalAlignment="Center" Margin="10,0,10,0" FontSize="24" Foreground="White">Base64 String zapis:</Label>
-        <TextBox FontSize="20" Grid.Row="3" Grid.Column="1" Text="{Binding Path=HashedContentBase64}" TextWrapping="NoWrap" VerticalAlignment="Center" Height="35" Background="#FF1E1E1E" Margin="10,0,10,0" Foreground="White" BorderBrush="#FF972F3B" SelectionBrush="#FF8F0000" RenderTransformOrigin="0.5,0.5" MaxWidth="1000" />
+        <TextBox FontSize="20" Grid.Row="3" Grid.Column="1" Text="{Binding Path=HashedContentBase64}" TextWrapping="NoWrap" VerticalAlignment="Center" Height="35" Background="#FF1E1E1E" Margin="10,0,10,0" Foreground="White" BorderBrush="#FF972F3B" SelectionBrush="#FF8F0000" RenderTransformOrigin="0.5,0.5" MaxWidth="1000" IsReadOnly="True"/>
 
         <Label Padding="5 10 0 0" Grid.Row="5" Grid.Column="1" FontFamily="Bahnschrift Light" Height="40" VerticalAlignment="Center" Margin="10,0,10,0" FontSize="24" Foreground="White" Content="Heksadecimalni zapis:" />
-        <TextBox FontSize="16" Grid.Row="6" Grid.Column="1" Text="{Binding Path=HashedContentHex}" TextWrapping="NoWrap" VerticalAlignment="Center" Height="25" Background="#FF1E1E1E" Margin="10,0,10,0" Foreground="White" BorderBrush="#FF972F3B" SelectionBrush="#FF8F0000" RenderTransformOrigin="0.5,0.5" MaxWidth="1000"/>
+        <TextBox FontSize="16" Grid.Row="6" Grid.Column="1" Text="{Binding Path=HashedContentHex}" TextWrapping="NoWrap" VerticalAlignment="Center" Height="25" Background="#FF1E1E1E" Margin="10,0,10,0" Foreground="White" BorderBrush="#FF972F3B" SelectionBrush="#FF8F0000" RenderTransformOrigin="0.5,0.5" MaxWidth="1000" IsReadOnly="True"/>
 
         <Button x:Name="saveFileButton" Padding="0 -2 0 0" Grid.Row="9" Grid.Column="1" BorderBrush="Black" Content="Pohrani u datoteku" HorizontalAlignment="Left" Margin="0,9" FontSize="18" Click="SaveFileButton_Click" Width="200" Style="{StaticResource CryptorButton}">
             <Button.Effect>

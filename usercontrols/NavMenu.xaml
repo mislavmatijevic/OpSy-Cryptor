@@ -36,7 +36,7 @@
                 </Setter.Value>
             </Setter>
 
-            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontSize" Value="15" />
 
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
@@ -85,8 +85,8 @@
 
         <Button IsEnabled="True" FontFamily="Bahnschrift Light" Content="Učitaj datoteku" Grid.Row="1" BorderBrush="Black" FontSize="22" RenderTransformOrigin="0.5,0.5" Click="LoadFile_Click" Grid.ColumnSpan="2" Margin="10,0,10,0" Style="{StaticResource CryptorButton}" />
 
-        <Button FontFamily="Bahnschrift Light" Content="Kriptiraj simetrično" Grid.Row="3" Click="CryptSymmetric_Click" Style="{StaticResource NavMenuButton}" Margin="0,0,0,0" />
-        <Button FontFamily="Bahnschrift Light" Content="Kriptiraj asimetrično" Grid.Row="5" Click="CryptAsymmetric_Click" Style="{StaticResource NavMenuButton}" Margin="0,0,0,0" />
+        <Button FontFamily="Bahnschrift Light" Content="Simetrična kriptografija" Grid.Row="3" Click="CryptSymmetric_Click" Style="{StaticResource NavMenuButton}" Margin="0,0,0,0" />
+        <Button FontFamily="Bahnschrift Light" Content="Asimetrična kriptografija" Grid.Row="5" Click="CryptAsymmetric_Click" Style="{StaticResource NavMenuButton}" Margin="0,0,0,0" />
         <Button FontFamily="Bahnschrift Light" Content="Izračunaj sažetak" Grid.Row="7" Click="CalculateHash_Click" Style="{StaticResource NavMenuButton}" />
         <Button FontFamily="Bahnschrift Light" Content="Digitalno potpiši" Grid.Row="9" Click="DigitallySign_Click" Style="{StaticResource NavMenuButton}" />
         <Button FontFamily="Bahnschrift Light" Content="Provjeri potpis" Grid.Row="11" Click="CheckSignature_Click" Style="{StaticResource NavMenuButton}" />

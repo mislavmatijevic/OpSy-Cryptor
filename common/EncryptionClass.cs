@@ -29,8 +29,8 @@ namespace OpSy_Cryptor.common
         {
             aesObject = new AesCryptoServiceProvider // 256bit
             {
-                // Padding error without this. (probably)
-                Padding = PaddingMode.Zeros
+                // Padding error without this. If "Zeroes" is selected, zeroes are appended and cause problems when checking hash.
+                Padding = PaddingMode.PKCS7
             };
             initializationVector = aesObject.IV;
         }
@@ -201,9 +201,9 @@ namespace OpSy_Cryptor.common
             {
                 aesObject.Key = Convert.FromBase64String(secretKeyBase64);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new Exception($"Ključ nije ispravan za AES!\n{e}");
+                throw new Exception($"Ključ nije ispravan za AES!\nProvjerite još jednom javni ključ primatelja.");
             }
 
             try
